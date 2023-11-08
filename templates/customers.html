@@ -1,0 +1,104 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content" id="content_clients" onload="updateClientsTable">
+    <div class="title-info">
+        <i class="fa fa-chart-bar"></i>
+        <p id="numbers"> المستأجرين</p>
+    </div>
+
+    <div dir="rtl" id="search_add">
+        <a id="addBtn" class="action-button" href="{% url 'add_customer' %}">
+            إضافة مستأجر جديد +
+        </a>
+        <div>
+            <input id="searchInput" type="text" class="search-input" placeholder="البحث  باسم المستأجر" />
+            <button id="searchBtn" type="button" class="action-button">بحث</button>
+        </div>
+    </div>
+
+    <!-- Clients table -->
+    <table id="clients-table" dir="rtl">
+        <colgroup>
+            <col span="1" style="width: 15%;" />
+            <col span="1" style="width: 30%;" />
+            <col span="1" style="width: 15%;" />
+            <col span="1" style="width: 10%;" />
+            <col span="1" style="width: 10%;" />
+        </colgroup>
+        <tr>
+            <th style="color: #ffffff;">رقم الهوية</th>
+            <th style="color: #ffffff;">اسم المستأجر</th>
+            <th style="color: #ffffff;">رقم الجوال</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tbody id="customerTable">
+            {% for customer in customersModule %}
+            <tr class="customersModule">
+                <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.cID }}</td>
+                <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.cName }}</td>
+                <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.cNumber }}</td>
+                <td style="background-color: rgba(87, 87, 87, 0.349);">
+                    <a style="text-decoration: none; color: rgb(0, 71, 15);"
+                        href="{% url 'edit_customer' customer.cID %}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                </td>
+                <td style="background-color: rgba(255, 52, 52, 0.349);">
+                    <a style="text-decoration: none; color: rgb(185, 3, 3);"
+                        href="{% url 'delete_customer' customer.cID %}">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+            
+        </tbody>
+        
+    </table>
+</div>
+
+<script>
+    const searchBtn = document.getElementById('searchBtn');
+    const searchInput = document.getElementById('searchInput');
+    const customerTable = document.getElementById('customerTable');
+
+    searchBtn.addEventListener('click', () => {
+        const searchValue = searchInput.value.trim();
+        if (searchValue.length > 0) {
+            filterCustomers(searchValue);
+        } else {
+            resetFilter();
+        }
+    });
+
+    function filterCustomers(searchValue) {
+        const customers = document.getElementsByClassName('customersModule');
+        for (let i = 0; i < customers.length; i++) {
+            const customerName = customers[i].getElementsByTagName('td')[1].innerText;
+            if (customerName.includes(searchValue)) {
+                customers[i].style.display = 'table-row';
+            } else {
+                customers[i].style.display = 'none';
+            }
+        }
+    }
+
+    function resetFilter() {
+        const customers = document.getElementsByClassName('customersModule');
+        for (let i = 0; i < customers.length; i++) {
+            customers[i].style.display = 'table-row';
+        }
+    }
+</script>
+
+{% endblock content %}

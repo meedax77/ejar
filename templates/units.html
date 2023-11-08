@@ -1,0 +1,160 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content" id="content_units">
+
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> الوحدات</p>
+    </div>
+    <div dir="rtl" id="search_add">
+      <a id="addBtn" class="action-button" onclick="openAddModal()" type="button" href="{% url 'add_unit' %}">
+        إضافة وحدة جديد +
+      </a>
+      <div>
+        <input id="searchInput" type="text" class="search-input" placeholder="البحث باسم الوحدة " />
+        <button id="searchBtn"  type="button" class="action-button">بحث</button>
+      </div>
+    </div>
+    <table id="units-table" dir="rtl">
+      <colgroup>
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 30%;" />
+        <col span="1" style="width: 10%;" />
+        <col span="1" style="width: 10%;" />
+      </colgroup>
+      <tr>
+        <th style="color: #ffffff;"> اسم الوحدة</th>
+        <th style="color: #ffffff;" >نوع الوحدة  </th>
+        <th style="color: #ffffff;" >تابعة للمبنى </th>
+        <th> </th>
+        <th></th>
+      </tr>
+      <table dir="rtl"
+      <colgroup>
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 30%;" />
+        <col span="1" style="width: 10%;" />
+        <col span="1" style="width: 10%;" />
+      </colgroup>
+      <tbody id="unitTable">
+      {% for unit in unitsModule %}
+        <tr class="unitsModule">
+          <td style="background-color: rgba(126, 189, 126, 0.349);">{{ unit.uName }}</th>
+          <td style="background-color: rgba(126, 189, 126, 0.349);">{{ unit.uKind2 }}</th>
+          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ unit.building }}</th>
+          <td style="background-color: rgba(87, 87, 87, 0.349);">
+            <a style="text-decoration: none; color: rgb(0, 71, 15);"
+                href="{% url 'edit_unit' unit.uNumber %}">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </a>
+        </td>
+        <td style="background-color: rgba(255, 52, 52, 0.349);">
+            <a style="text-decoration: none; color: rgb(185, 3, 3);"
+                href="{% url 'delete_unit' unit.uNumber %}">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+        </td>
+      {% endfor %}
+      {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+      </tbody>
+    </tr>
+      </table>
+    </table>
+    <!-- Add Note Modal -->
+    <div id="addunitsModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header" dir="rtl">
+          <h2 id="edittag"> مبنى جديد</h2>
+        </div>
+        <div class="modal-body" dir="rtl">
+          <div class="enterclient">
+            <input type="text" class="idinput" placeholder="اسم المبنى   " id="inputid">
+            <input type="text" class="idinput" placeholder="رقم الصك" id="inputname">
+            <input type="text" class="idinput" placeholder="اسم الشارع" id="inputnumber">
+            <input type="text" class="idinput" placeholder="اسم الحي " id="inputnumber">
+            <input type="text" class="idinput" placeholder="اسم  " id="inputnumber">
+
+          </div>
+          <p id="addError" class="error"></p>
+        </div>
+        <div class="modal-footer">
+          <button id="saveAddClientBtn" onclick="saveNewClient()" type="button" class="action-button">حفظ
+          </button>
+          <button id="cancelAddClientBtn" type="button" class="action-button">
+            الغاء
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="editunitsModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header" dir="rtl">
+          <h2 id="edittag">تعديل بيانات مستأجر </h2>
+        </div>
+        <div class="modal-body" dir="rtl">
+          <div class="enterclient">
+            <input type="text" class="idinput" id="editid">
+            <input type="text" class="idinput" id="editname">
+            <input type="text" class="idinput" id="editnumber">
+          </div>
+          <p id="editError" class="error"></p>
+        </div>
+        <div class="modal-footer">
+          <button id="saveEditClientBtn" onclick="saveEditClient()" type="button" class="action-button">حفظ
+          </button>
+          <button id="canceleditClientBtn" type="button" class="action-button">
+            الغاء
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    const searchBtn = document.getElementById('searchBtn');
+    const searchInput = document.getElementById('searchInput');
+    const unitTable = document.getElementById('unitTable');
+
+    searchBtn.addEventListener('click', () => {
+        const searchValue = searchInput.value.trim();
+        if (searchValue.length > 0) {
+            filterUnits(searchValue);
+        } else {
+            resetFilter();
+        }
+    });
+
+    function filterUnits(searchValue) {
+        const units = document.getElementsByClassName('unitsModule');
+        for (let i = 0; i < units.length; i++) {
+            const unitName = units[i].getElementsByTagName('td')[0].innerText;
+            if (unitName.includes(searchValue)) {
+                units[i].style.display = 'table-row';
+            } else {
+                units[i].style.display = 'none';
+            }
+        }
+    }
+
+    function resetFilter() {
+        const units = document.getElementsByClassName('unitsModule');
+        for (let i = 0; i < units.length; i++) {
+            units[i].style.display = 'table-row';
+        }
+    }
+</script>
+
+{% endblock content %}

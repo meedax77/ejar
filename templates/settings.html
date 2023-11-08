@@ -1,0 +1,48 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="content" id="content_sittings">
+
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> الإعدادات</p>
+    </div>
+
+
+
+
+  <table id="buildings-table" dir="rtl">
+    <colgroup>
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 15%;" />
+    </colgroup>
+    <tr>
+      <th style="color: #ffffff;"> username </th>
+      <th style="color: #ffffff;" >الاسم </th>
+      <th style="color: #ffffff;" >الايميل </th>
+    </tr>
+    <table dir="rtl">
+    <colgroup>
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 15%;" />
+    </colgroup>
+    <tbody id="buildingTable">
+      {% for user in users %}
+      <tr class="buildingsModule">
+        <td style="background-color: rgba(126, 189, 126, 0.349);">{{ user.username }}</td>
+        <td style="background-color: rgba(126, 189, 126, 0.349);">{{ user.first_name }}</td>
+        <td style="background-color: rgba(126, 189, 126, 0.349);">{{ user.email }}</td>
+  </tr>
+  {% empty %}
+      <li>No users found.</li>
+    {% endfor %}
+</tbody>
+    </table>
+  </table>
+
+{% endblock content %}

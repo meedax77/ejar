@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+
+<html lang="ar">
+    {% load crispy_forms_tags %}
+<head>
+  <meta charset="utf-8" />
+  <meta name="keywords" content=" وقف الفلاتة الماسوفي, نظام محاسبي عقاري ">
+  <meta name="author" content="meeda">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>النظام العقاري للوقف</title>
+  <meta name="description" content="النظام المحاسبي لوقف الفلاتة الماسوفية" />
+  {% load static %}
+  <link rel="icon" type="image/png" href="{% static 'img/small-logo.png' %}">
+  <link rel="stylesheet" href="{%static 'css/login.css'%}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+
+
+<body>
+    
+
+
+
+	<section class="login">
+		<div class="login_box">
+			<div class="left">
+				<div class="top_link"><a href="https://maps.app.goo.gl/AU1yooz82z3GToc78"><img src="https://drive.google.com/u/0/uc?id=16U__U5dJdaTfNGobB_OpwAJ73vM50rPV&export=download" alt="">عنوان الجمعية</a></div>
+				<div class="contact">
+                    <form method="post">
+                        <h3> تسجل الدخول للموظفين</h3>
+                        {% csrf_token %}{{form|crispy}}
+                        <button type="submit" class="submit">الدخول للمنصة</button>
+                    </form>
+				</div>
+			</div>
+			<div class="right">
+				<div class="right-text">
+                    <img src="{% static 'img/small-logo.png' %}" alt="">
+				</div>
+				<div class="right-inductor"></div>
+			</div>
+		</div>
+	</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+crossorigin="anonymous"
+></script>
+</body>
+
+
+
+
+

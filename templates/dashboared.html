@@ -1,0 +1,88 @@
+
+{% extends 'head.html' %}
+{% load static %}
+
+{% block content %}
+
+
+      <div class="title-info">
+        <i class="fa fa-chart-bar"></i>
+        <p id="numbers">احصائيات الوقف</p>
+      </div>
+
+      <div class="data-info">
+        <div class="box">
+          <i class="fa-solid fa-file-signature"></i>
+          <div class="data">
+            <p>عدد العقود النشطة</p>
+            <span>{{ active_contracts }}</span>
+          </div>
+        </div>
+        <div class="box">
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+          <div class="data">
+            <p>قيمة المبالغ المستحقة</p>
+            <span>{{ total_due_amount }}</span>
+          </div>
+        </div>
+        <div class="box">
+          <i class="fa-solid fa-money-bills"></i>
+          <div class="data">
+            <p>عدد الدفعات المستحقة</p>
+            <span>{{ due_payments_count }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-info">
+        <i class="fa fa-chart-bar"></i>
+        <p>تفاصيل الدفعات المستحقة  </p>
+      </div>
+
+      <table dir="rtl">
+        <colgroup>
+          <col span="1" style="width: 20%;" />
+          <col span="1" style="width: 20%;" />
+          <col span="1" style="width: 20%;" />
+          <col span="1" style="width: 20%;" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>المستأجر</th>
+            <th>قيمة الدفعة</th>
+            <th>تاريخ الاستحقاق</th>
+            <th>مراجعة العقد</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for payment in PaymentModule %}
+            <tr>
+              <td>{{ payment.contract.customer }}</td>
+              <td>{{ payment.amount }}</td>
+              <td>{{ payment.payment_due }}</td>
+              <td>
+                <a style="text-decoration: none; color: rgb(0, 44, 10);" href="{% url 'contract_detail' contract_id=payment.contract.id %}"><i class="fa-solid fa-eye"></i> </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    
+
+
+
+  </div>
+
+
+  <footer class="footer">
+    <p> &copy; 2023 جميع الحقوق محفوظة لجمعية وقف الماسوفية, طُور بواسطة meeda</p>
+  
+  </footer>
+
+
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,523 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.container{
+    display: flex;
+}
+
+.img-box i{
+    font-size: 25px;
+    padding-left: 0.4em;
+    padding-right: 1em;
+}
+.profile{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 1em;
+}
+.profile h2{
+    font-size: 25px;
+    color: #fff;
+    text-transform: capitalize;
+}
+.menu{
+    background-color: #625F66;
+    width: 40px;
+    height: 100vh;
+    padding: 20px;
+    overflow: hidden;
+    transition: 0.5s;
+}
+.menu:hover{
+    width: 260px;
+}
+ul{
+    list-style: none;
+    position: relative;
+    height: 90%;
+}
+ul li a{
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    transition: 0.3s;
+}
+ul li a:hover, .active{
+    background-color: #8A99A3;
+}
+.menu ul li a{
+    font-size: 0.8em;
+}
+.log-out{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.log-out a{
+    background-color: rgba(223, 0, 0, 0.589);
+}
+ul li a{
+    font-size: 17px;
+}
+.content{
+    width: 100%;
+    margin: 10px;
+}
+.title-info{
+    background-color: #00693F;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    margin: 10px 0;
+    color: #fff;
+}
+.data-info{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.data-info .box{
+    background-color: #AAA9AA;
+    height: 150px;
+    flex-basis: 150px;
+    flex-grow: 1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transition: 0.3s;
+}
+.data , .box{
+color: #252525;
+}
+.data-info .box:hover{
+    background-color: #00693f77;
+}
+.data-info .box i{
+    font-size: 40px;
+}
+.data-info .box .data{
+    text-align: center; 
+}
+.data-info .box .data span{
+    font-size: 30px;
+}
+table{
+    width: 100%;
+    text-align: center;
+    border-spacing: 8px;
+}
+
+td, th{
+    background-color: #00693f77;
+    height: 20px;
+    border-radius: 8px;
+        transition: 0.3s;
+        color: #111111;
+        
+}
+th{
+    background-color: #625F66;
+    transition: 0.3s;
+    color: #111111;
+}
+td:hover{
+    background-color: #00693F;
+}
+
+.price{
+    background-color: aqua;
+}
+.count{
+    background-color: brown;
+}
+.logo{
+    position: relative;
+    direction: rtl;
+}
+.logo img{
+    width: 6em;
+}
+.footer{
+    direction: rtl;
+    position: relative;
+    padding-right: 1em;
+}
+.footer p{
+    font-size: 0.8em;
+}
+
+
+
+/* Search Input Field */
+
+.search-input {
+    width: 20em;
+    height: 28px;
+    font-size: 12px;
+    border: 2px solid #00693F;
+    border-radius: 8px;
+    padding-right: 1em;
+  }
+  
+  /* The Blue Button */
+  
+  #search_add{
+    display: flex;
+    justify-content: space-between;
+  }
+  .action-button {
+    background-color: #00693F;
+    border: 2px solid #00693F;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+
+  }
+  
+  .action-button:hover {
+    background-color: white;
+    color: black;
+  }
+  
+  /* The Notes Table */
+  
+  
+  tr:nth-child(even) {
+    background-color: #cecdcd;
+  }
+  
+  tr:hover td {
+    background-color: lightblue;
+  }
+/*model styleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee*/
+/* Modal Content */
+/* The Modal (background) */
+.modal {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    -webkit-animation-name: fadeIn; /* Fade in the background */
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s;
+    display: none;
+  }
+
+.modal-content {
+    width: 50%;
+    position: absolute;
+    top: 30%;
+    margin-left: 25%;
+    background-color: #fefefe;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s;
+    border-radius: 8px;
+  }
+  
+  /* The Close X Button */
+  .close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .modal-header {
+    padding: 2px 16px;
+    background-color: rgb(51, 51, 51);
+    color: white;
+    border-radius: 8px;
+    margin: 1em;
+  }
+  
+  .modal-body {
+    padding: 2px 16px;
+  }
+  
+  .modal-body p {
+      font-size: 17px;
+      padding: 0px;
+      margin-top: 9px;
+  }
+  
+  .modal-footer {
+    padding: 2px 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-color: white;
+    color: white;
+  }
+  
+  @-webkit-keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+
+  .error {
+    color: red; 
+    text-align: center;
+  }
+  .enterclient{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    flex-wrap: 1;
+    gap: 1em;
+    margin: 1em;
+  }
+  .idinput{
+    padding: 0.1em 0.3em;
+    border-radius: 0.5em;
+    border: 2px solid #252525;
+  }
+
+
+.formdiv{
+  border-radius: 1em;
+  background-color: #00693f4d;
+  margin: 50px;
+  padding: 50px;
+  font-size: 17px;
+  width: 500px;
+  left: 270px;
+  position: relative;
+}
+
+.customer-form{
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
+.customer-form input ,select {
+  width: 20em;
+  height: 28px;
+  font-size: 12px;
+  border: 2px solid #00693F;
+  border-radius: 8px;
+  padding-right: 1em;
+  margin-top: 5px;
+  margin-right: 15px;
+  margin-left: 15px;
+  
+  }
+  .customer-form  label {
+    padding-top: 20px;
+  }
+
+
+
+  .form-group{
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+
+  }
+
+
+  .save-button {
+    background-color: #00693F;
+    border: 2px solid #00693F;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 70px;
+
+  }
+
+
+
+
+.inputsss input{
+  width: 20em;
+  height: 28px;
+  font-size: 12px;
+  border: 2px solid #00693F;
+  border-radius: 8px;
+  padding-right: 1em;
+  margin-top: 5px;
+  margin-right: 15px;
+  margin-left: 15px;
+}
+#label{
+padding: 15px;
+}
+
+
+.container {
+  position: relative;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.sanad_header {
+  width: 100%;
+}
+
+.info_sanad{
+  position: absolute;
+  top: 225px;
+  left: -50px;
+  width: 100%;
+}
+
+.sanad_num{
+  position: absolute;
+  left: 150px;
+  top: -40px;
+}
+
+.footer_sanad {
+  position: fixed;
+  bottom: 260px;
+  left: 60px;
+}
+.footer_sanad p{
+  font-size: 20px;
+}
+
+.stamp {
+  width: 185px; /* adjust the width as needed */
+}
+
+
+.button_div{
+  display: flex;
+  gap: 10px;
+  direction: rtl;
+}
+.button_report {
+  background-color: rgba(61, 61, 61, 0.212);
+  color: #00693F;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 4px;
+  margin-right: 30px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 8px;
+
+}
+
+.button_report:hover {
+  background-color: #00693F;
+  color: white;
+}
+
+
+
+@media (max-width: 750px) {
+
+  .formdiv{
+    margin-left: -80px;
+    overflow: hidden;
+  }
+.data{
+  height: 50px;
+
+}
+.content{
+  overflow: hidden;
+
+}
+.datenone{
+ display: none;
+}
+
+.title-info{
+  position: relative;
+  width:90%;
+}
+
+.formdiv{
+  position: relative;
+  left:  100px;
+  width: 200px;
+}
+.formdiv input{
+
+  width: 120px;
+}
+.formdiv * {
+
+  width: 120px;
+}
+
+
+}
+
+
+@media (max-width: 1050px) {
+  .formdiv{
+    margin-left: -80px;
+  }
+
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="utf-8" />
+    <meta name="keywords" content=" وقف الفلاتة الماسوفي, نظام محاسبي عقاري ">
+    <meta name="author" content="meeda">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>سند القبض</title>
+    <meta name="description" content="النظام المحاسبي لوقف الفلاتة الماسوفية" />
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'img/small-logo.png' %}">
+    <link rel="stylesheet" href="{%static 'css/styles.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+{% load mathfilters %}
+
+
+
+<body>
+
+    <div class="container" dir="rtl">
+
+        <div class="header" id="content_home">
+            <img class="sanad_header" src="{% static 'img/header.png' %}" alt="header">
+        </div>
+
+
+        <div class="info_sanad">
+            <p dir="ltr" class="sanad_num">رقم السند: {{ received_payment.id }}</p>
+            <p>استلمنا من  : {{ received_payment.payment.contract.customer }}</p>
+            <br>
+            <p>مبلغ وقدره : {{ received_payment.received_amount }} ريـــال سعودي فقط لا غير</p>
+            <br>
+            <p>تاريخ الاستلام: {{ received_payment.received_date }}</p>
+            <br>
+            <p>طريقة الدفع : {{ received_payment.payment_method }}</p>
+            <br>
+            <p>رقم المستند : {{ received_payment.doc_number }}</p>
+            <br>
+            <p>وذلك مقابل دفعة لإيجار العقد رقم : {{ received_payment.payment.contract.contractNumber}}</p>
+            <p>نوع العقد  : {{ received_payment.payment.contract.contract_kind}}</p>
+            <p>للوحدة  : {{ received_payment.payment.contract.unit.uName}}</p>
+            <br>
+            <p>وبذلك يصبح المتبقي من العقد: {{ received_payment.payment.contract.total_amount|sub:total_received_amount }}</p>           
+             {% if received_payment.payment.contract.contract_kind == 'تجاري' %}
+            <div class="business">
+                <br><br><br><br>
+                <p>المبلغ (بدون ضريبة القيمة المضافة)  =   {{ received_payment.received_amount|mul:0.85|floatformat:2 }} ريـــال سعودي فقط لا غير</p>
+                <p>--------------------------------</p>
+                <p>ضريبة القيمة المضافة   =  {{ received_payment.received_amount|mul:0.15|floatformat:2 }} ريـــال سعودي فقط لا غير</p>
+                <p>--------------------------------</p>
+                <p>المبلغ شامل الضريبة   =  {{ received_payment.received_amount  }} ريـــال سعودي فقط لا غير</p>
+            </div>
+            {% endif %}
+
+
+        </div>
+
+
+        <div class="footer_sanad">
+            <p>الختم:</p>
+            <img class="stamp" src="{% static 'img/stamp.png' %}" alt="stamp">
+        </div>
+
+
+        <script>
+            window.onload = function() {
+                window.print();
+            };
+        </script>
+
+    </div>
+</body>
+</html>

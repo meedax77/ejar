@@ -1,0 +1,162 @@
+
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content" id="content_contract">
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> ربط مستأجر</p>
+    </div>
+    <div dir="rtl" id="search_add">
+      <a id="addBtn" class="action-button"   href="{% url 'contract_create_or_update' %}">
+        إضافة عقد جديد +
+      </a>
+      <div>
+        <input id="searchInput" type="text" class="search-input" placeholder="البحث باسم المستأجر  " />
+        <button id="searchBtn" onclick="searchBuildings()" type="button" class="action-button">بحث</button>
+      </div>
+    </div>
+    <table id="contract-table" dir="rtl">
+      <colgroup>
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col span="1" style="width: 20%;" />
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 5%;" />
+        <col span="1" style="width: 5%;" />
+      </colgroup>
+      <tr>
+        <th class="datenone" style="color: #ffffff;">   رقم العقد</th>
+        <th class="datenone" style="color: #ffffff;">  بداية العقد</th>
+        <th class="datenone" style="color: #ffffff;" > نهاية العقد  </th>
+        <th style="color: #ffffff;" >المستأجر   </th>
+        <th style="color: #ffffff;" >الوحدة   </th>
+        <th style="color: #ffffff;" >اجمالي الايجار    </th>
+        <th> </th>
+        <th></th>
+      </tr>
+      <table dir="rtl"
+      <colgroup>
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col span="1" style="width: 20%;" />
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 5%;" />
+        <col span="1" style="width: 5%;" />
+      </colgroup>
+      <tbody class="contractTable">
+      {% for contract in contractModule %}
+        <tr class="contractsModule">
+          <td class="datenone" style="background-color: rgba(126, 189, 126, 0.349);">{{ contract.contractNumber }}</th>
+          <td class="datenone"  style="background-color: rgba(126, 189, 126, 0.349);">{{ contract.startDate }}</th>
+          <td class="datenone"  style="background-color: rgba(126, 189, 126, 0.349);">{{ contract.endDate }}</th>
+          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ contract.customer }}</th>
+          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ contract.unit }}</th>
+          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ contract.total_amount }}</th>
+          <td style="background-color: rgba(87, 87, 87, 0.349);"><a style="text-decoration: none; color: rgb(0, 71, 15);" href="{% url 'contract_detail' contract.id %}">الدفعات</a></th>
+            <td style="background-color: rgba(255, 52, 52, 0.349);">
+              <a style="text-decoration: none; color: rgb(185, 3, 3);"
+                  href="{% url 'delete_contract' contract.contractNumber %}">
+                  <i class="fa-solid fa-trash"></i>
+              </a>
+          </td>   
+             {% endfor %}
+    </tbody>
+    </tr>
+      </table>
+    </table>
+    <!-- Add Note Modal -->
+    <div id="addunitsModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header" dir="rtl">
+          <h2 id="edittag"> مبنى جديد</h2>
+        </div>
+        <div class="modal-body" dir="rtl">
+          <div class="enterclient">
+            <input type="text" class="idinput" placeholder="اسم المبنى   " id="inputid">
+            <input type="text" class="idinput" placeholder="رقم الصك" id="inputname">
+            <input type="text" class="idinput" placeholder="اسم الشارع" id="inputnumber">
+            <input type="text" class="idinput" placeholder="اسم الحي " id="inputnumber">
+            <input type="text" class="idinput" placeholder="اسم  " id="inputnumber">
+
+          </div>
+          <p id="addError" class="error"></p>
+        </div>
+        <div class="modal-footer">
+          <button id="saveAddClientBtn" onclick="saveNewClient()" type="button" class="action-button">حفظ
+          </button>
+          <button id="cancelAddClientBtn" type="button" class="action-button">
+            الغاء
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="editunitsModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header" dir="rtl">
+          <h2 id="edittag">تعديل بيانات مستأجر </h2>
+        </div>
+        <div class="modal-body" dir="rtl">
+          <div class="enterclient">
+            <input type="text" class="idinput" id="editid">
+            <input type="text" class="idinput" id="editname">
+            <input type="text" class="idinput" id="editnumber">
+          </div>
+          <p id="editError" class="error"></p>
+        </div>
+        <div class="modal-footer">
+          <button id="saveEditClientBtn" onclick="saveEditClient()" type="button" class="action-button">حفظ
+          </button>
+          <button id="canceleditClientBtn" type="button" class="action-button">
+            الغاء
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    const searchBtn = document.getElementById('searchBtn');
+    const searchInput = document.getElementById('searchInput');
+    const contractTable = document.getElementById('contractTable');
+
+    searchBtn.addEventListener('click', () => {
+        const searchValue = searchInput.value.trim();
+        if (searchValue.length > 0) {
+            filterContracts(searchValue);
+        } else {
+            resetFilter();
+        }
+    });
+
+    function filterContracts(searchValue) {
+        const contracts = document.getElementsByClassName('contractsModule');
+        for (let i = 0; i < contracts.length; i++) {
+            const contractName = contracts[i].getElementsByTagName('td')[2].innerText;
+            if (contractName.includes(searchValue)) {
+                contracts[i].style.display = 'table-row';
+            } else {
+                contracts[i].style.display = 'none';
+            }
+        }
+    }
+
+    function resetFilter() {
+        const contracts = document.getElementsByClassName('contractsModule');
+        for (let i = 0; i < contracts.length; i++) {
+          contracts[i].style.display = 'table-row';
+        }
+    }
+</script>
+
+
+
+{% endblock content %}

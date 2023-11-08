@@ -1,0 +1,106 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content" id="content_clients” onload="updateClientsTable"> <div class="title-info"> <i class="fa fa-chart-bar"></i> <p id="numbers">بيانات العقد</p> </div>
+
+<div class="formdiv">
+<form dir="rtl" enctype="multipart/form-data" class="contarct" method="post" id="contract_form">
+    {% csrf_token %}
+    <!-- main form start --- in our case product form -->
+    <div class="card" dir="rtl">
+      
+        <div class="card2">
+            <h4 class="card-title"> إضافة عقد جديد</h4>
+        </div>
+    <div class="inputsss">
+        <div id="label">
+            <label for="{{ form.contract_kind.id_for_label }}"> نوع العقد:</label>
+            {{ form.contract_kind }}
+          </div>
+          <div id="label">
+            <label for="{{ form.contractNumber.id_for_label }}"> رقم العقد :</label>
+            {{ form.contractNumber }}
+          </div>
+          <div id="label">
+            <label for="{{ form.customer.id_for_label }}"> المستأجر:</label>
+            {{ form.customer }}
+          </div>
+          <div id="label">
+            <label for="{{ form.unit.id_for_label }}"> الوحدة:</label>
+            {{ form.unit }}
+          </div>
+          <div id="label">
+            <label for="{{ form.startDate.id_for_label }}"> تاريخ بداية العقد:</label>
+            {{ form.startDate }}
+          </div>
+          <div id="label">
+            <label for="{{ form.endDate.id_for_label }}"> تاريخ نهاية العقد:</label>
+            {{ form.endDate }}
+          </div>
+          <div id="label">
+            <label for="{{ form.payment_amount.id_for_label }}" > قيمة العقد بدون الضريبة:</label>
+            {{ form.payment_amount }}
+          </div>
+          <div id="label">
+            <label for="vat_amount">قيمة الضريبة (15%):</label>
+            <input type="text" id="vat_amount" readonly>
+        </div>
+        
+        <div id="label">
+            <label for="total_amount">المبلغ الإجمالي (شامل الضريبة):</label>
+            <input type="text" id="total_amount" readonly>
+        </div>
+        
+ 
+    </div>
+    </div>
+    <!-- main form end --- in our case product form -->
+
+        <div class="form-group" dir="rtl">
+            <button type="submit" class="save-button">حفظ العقد</button>
+        </div>
+</form>
+
+
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+<script>
+
+$(document).ready(function() {
+  // when user clicks add more btn of variants
+  $('#add-payments-button').click(function(ev) {
+    ev.preventDefault();
+    var count = $('#item-payment').children().length;
+    var tmplMarkup = $('#payments-template').html();
+    var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+    $('#item-payment').append(compiledTmpl);
+
+    // update form count
+    $('#id_form-TOTAL_FORMS').attr('value', count + 1);
+  });
+});
+</script>
+
+
+
+<script>
+    $(document).ready(function() {
+      $('#contract_form').on('input', function() {
+        var contractKind = $('#id_contract_kind').val();
+        var paymentAmount = parseFloat($('#id_payment_amount').val());
+        if (contractKind === 'تجاري' && !isNaN(paymentAmount)) {
+          var vatAmount = paymentAmount * 0.15;
+          var totalAmount = paymentAmount + vatAmount;
+          $('#vat_amount').val(vatAmount.toFixed(2));
+          $('#total_amount').val(totalAmount.toFixed(2));
+        } else {
+          $('#vat_amount').val('0.00');
+          $('#total_amount').val(paymentAmount.toFixed(2));
+        }
+      });
+    });
+    
+    </script>
+{% endblock content %}

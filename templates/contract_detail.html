@@ -1,0 +1,163 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content" id="content_contract">
+    <div class="title-info">
+        <i class="fa fa-chart-bar"></i>
+        <p id="numbers"> بيانات العقد </p>
+    </div>
+</div>
+
+<div dir="rtl">
+    <p>رقم العقد: {{ contract.contractNumber }}</p>
+    <br>
+    <p> نوع العقد: {{ contract.contract_kind }}</p>
+    <br>
+    <p> المستأجر: {{ contract.customer }}</p>
+    <br>
+    <p> الوحدة: {{ contract.unit }}</p>
+    <br>
+    <p> تاريخ بداية العقد: {{ contract.startDate }}</p>
+    <br>
+    <p> تاريخ نهاية العقد: {{ contract.endDate }}</p>
+    <br>
+    <p> قيمة الايجار: {{ contract.total_amount }}</p>
+    <br>
+    <p>المبلغ المتبقي: <span id="remainingAmount"></span></p>
+    <br>
+</div>
+
+<!-- Add more contract details here -->
+
+<div class="content" id="content_contract">
+    <div class="title-info">
+        <i class="fa fa-chart-bar"></i>
+        <p id="numbers"> الدفعات </p>
+    </div>
+    <div dir="rtl">
+        <a dir="rtl" id="addBtn" class="action-button" href="{% url 'create_payment' contract.id %}">
+            إضافة دفعة جديدة +
+        </a>
+    </div>
+</div>
+
+<table id="buildings-table" dir="rtl">
+    <colgroup>
+        <col span="1" style="width: 10%;" />
+        <col span="1" style="width: 10%;" />
+        <col span="1" style="width: 10%;" />
+        <col span="1" style="width: 10%;" />
+
+    </colgroup>
+    <tr>
+        <th style="color: #ffffff;"> قيمة الدفعة </th>
+        <th style="color: #ffffff;"> تاريخ الاستحقاق </th>
+        <th style="color: #ffffff;"> سداد  </th>
+        <th style="color: #ffffff;"> حذف  </th>
+
+
+    </tr>
+
+    <tbody id="paymentTable">
+        {% for payment in contract.payment_set.all %}
+            <tr class="paymentsModule">
+                <td>{{ payment.amount }}</td>
+                <td>{{ payment.payment_due }}</td>
+                <td style="background-color: rgba(87, 87, 87, 0.349);" ><a style="text-decoration: none; color: rgb(0, 71, 15);" href="{% url 'payment_received' payment.id %}"><i class="fa-solid fa-credit-card"></i> </a></td>
+                <td style="background-color: rgba(255, 52, 52, 0.349);">
+                    <a style="text-decoration: none; color: rgb(185, 3, 3);"
+                        href="{% url 'delete_payment' payment.id %}">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="7">لا بوجد دفعات</td>
+            </tr>
+        {% endfor %}
+        <div>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            </div>
+        
+    </tbody>
+</table>
+
+<div class="content" id="content_contract">
+    <div class="title-info">
+        <i class="fa fa-chart-bar"></i>
+        <p id="numbers"> الدفعات السابقة </p>
+    </div>
+</div>
+
+<table id="buildings-table" dir="rtl">
+    <colgroup>
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 10%;" />
+    </colgroup>
+    <tr>
+      <th style="color: #ffffff;">الدفعة المستلمة</th>
+      <th style="color: #ffffff;">تاريخ الاستلام</th>
+      <th style="color: #ffffff;">طريقة الدفع</th>
+      <th style="color: #ffffff;">طباعة </th>
+      <th style="color: #ffffff;">حذف </th>
+    </tr>
+    <tbody id="previousPaymentTable">
+        {% for payment in contract.payment_set.all %}
+        {% for received_payment in payment.payment_received.all %}
+        <tr class="previousPaymentsModule">
+          <td>{{ received_payment.received_amount }}</td>
+          <td>{{ received_payment.received_date }}</td>
+          <td>{{ received_payment.payment_method }}</td>
+          <td style="background-color: rgba(87, 87, 87, 0.349);"><a style="text-decoration: none; color: rgb(0, 71, 15);" href="{% url 'print_payment_received' received_payment.id %}" target="_blank"><i class="fa-solid fa-print"></i></a></td>
+          <td style="background-color: rgba(255, 52, 52, 0.349);">
+            <a style="text-decoration: none; color: rgb(185, 3, 3);"
+                href="{% url 'delete_payment_received' received_payment.id %}">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+        </td>
+    </td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+      </tbody>
+  </table>
+
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // Calculate and display the remaining payment amount
+    function calculateRemainingAmount() {
+      var totalReceivedAmount = 0;
+      $('.previousPaymentsModule').each(function() {
+        var receivedAmount = parseFloat($(this).find('td:nth-child(1)').text());
+        totalReceivedAmount += receivedAmount;
+      });
+      var contractAmount = parseFloat('{{ contract.total_amount }}');
+      var remainingAmount = contractAmount - totalReceivedAmount;
+      $('#remainingAmount').text(remainingAmount.toFixed(2));
+    }
+
+    // Call the calculateRemainingAmount function initially
+    calculateRemainingAmount();
+
+    // Call the calculateRemainingAmount function whenever a new received payment is added or removed
+    $('#previousPaymentTable').on('DOMSubtreeModified', function() {
+      calculateRemainingAmount();
+    });
+  });
+</script>
+
+{% endblock %}

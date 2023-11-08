@@ -1,0 +1,25 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+<div class="content" id="content_clients" onload="updateClientsTable">
+    <div class="title-info">
+        <i class="fa fa-chart-bar"></i>
+        <p id="numbers">بيانات المبنى</p>
+    </div>
+
+    <div class="formdiv" id="addCustomerForm" dir="rtl">
+        <form method="POST" enctype="multipart/form-data" class="customer-form">
+            {% csrf_token %}
+              {{ form }}
+            <div class="form-group">
+                <button type="submit" class="save-button">حفظ</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

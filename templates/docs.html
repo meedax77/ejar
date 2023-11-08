@@ -1,0 +1,42 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content" id="content_docs">
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> تقارير فردية </p>
+    </div>
+    <div class="button_div">
+    <a class="button_report" href="{% url 'generate_report' %}">تقرير تفصيلي للمستأجر</a>
+    <a class="button_report" href="">تقرير تفصيلي للمبنى</a>
+  </div>
+  </div>
+
+
+  <div class="content" id="content_docs">
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> تقارير عامة </p>
+    </div>
+    <div class="button_div">
+      <a class="button_report" href="">تقرير المستأجرين </a>
+      <a class="button_report" href="">تقرير العقود </a>
+      <a class="button_report" href="">تقرير المباني </a>
+    </div>
+  </div>
+
+  <div class="content" id="content_docs">
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> تقارير مالية </p>
+    </div>
+    <div class="button_div">
+      <a class="button_report" href="">تقرير الدفعات المستحقة</a>
+      <a class="button_report" href="">تقرير الايراد العام</a>
+      <a class="button_report" href="">تقرير الضريبة </a>
+    </div>
+  </div>
+
+
+{% endblock content %}

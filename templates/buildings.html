@@ -1,0 +1,169 @@
+
+{% extends 'head.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+
+<div class="content" id="content_buildings">
+
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> المباني</p>
+    </div>
+    <div dir="rtl" id="search_add">
+      <a id="addBtn" class="action-button" href="{% url 'add_building' %}">
+        إضافة مبنى جديد +
+      </a>
+      <div>
+        <input id="searchInput" type="text" class="search-input" placeholder="البحث باسم المبنى " />
+        <button id="searchBtn" type="button" class="action-button">بحث</button>
+      </div>
+    </div>
+
+    <!-- buildings table -->
+    <table id="buildings-table" dir="rtl">
+      <colgroup>
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 30%;" />
+        <col span="1" style="width: 10%;" />
+        <col span="1" style="width: 10%;" />
+      </colgroup>
+      <tr>
+        <th style="color: #ffffff;"> اسم المبنى</th>
+        <th style="color: #ffffff;" >رقم الصك </th>
+        <th style="color: #ffffff;" >العنوان </th>
+        <th> </th>
+        <th></th>
+      </tr>
+      <table dir="rtl"
+      <colgroup>
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 30%;" />
+        <col span="1" style="width: 10%;" />
+        <col span="1" style="width: 10%;" />
+      </colgroup>
+      <tbody id="buildingTable">
+      {% for building in buildingsModule %}
+        <tr class="buildingsModule">
+          <td style="background-color: rgba(126, 189, 126, 0.349);">{{ building.bName }}</td>
+          <td style="background-color: rgba(126, 189, 126, 0.349);">{{ building.dID }}</td>
+          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ building.bAddress }}</td>
+          <td style="background-color: rgba(87, 87, 87, 0.349);">
+            <a style="text-decoration: none; color: rgb(0, 71, 15);"
+                href="{% url 'edit_building' building.dID %}">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </a>
+        </td>
+        <td style="background-color: rgba(255, 52, 52, 0.349);">
+            <a style="text-decoration: none; color: rgb(185, 3, 3);"
+                href="{% url 'delete_building' building.dID %}">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+  </tbody>
+      </table>
+    </table>
+    <!-- Add Note Modal -->
+    <div id="addbuildingModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header" dir="rtl">
+          <h2 id="edittag"> مبنى جديد</h2>
+        </div>
+        <div class="modal-body" dir="rtl">
+          <div class="enterclient">
+            <input type="text" class="idinput" placeholder="اسم المبنى   " id="inputid">
+            <input type="text" class="idinput" placeholder="رقم الصك" id="inputname">
+            <input type="text" class="idinput" placeholder="اسم الشارع" id="inputnumber">
+            <input type="text" class="idinput" placeholder="اسم الحي " id="inputnumber">
+            <input type="text" class="idinput" placeholder="اسم  " id="inputnumber">
+
+          </div>
+          <p id="addError" class="error"></p>
+        </div>
+        <div class="modal-footer">
+          <button id="saveAddClientBtn" onclick="saveNewClient()" type="button" class="action-button">حفظ
+          </button>
+          <button id="cancelAddClientBtn" type="button" class="action-button">
+            الغاء
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="editClientModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header" dir="rtl">
+          <h2 id="edittag">تعديل بيانات مستأجر </h2>
+        </div>
+        <div class="modal-body" dir="rtl">
+          <div class="enterclient">
+            <input type="text" class="idinput" id="editid">
+            <input type="text" class="idinput" id="editname">
+            <input type="text" class="idinput" id="editnumber">
+          </div>
+          <p id="editError" class="error"></p>
+        </div>
+        <div class="modal-footer">
+          <button id="saveEditClientBtn" onclick="saveEditClient()" type="button" class="action-button">حفظ
+          </button>
+          <button id="canceleditClientBtn" type="button" class="action-button">
+            الغاء
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <script>
+    const searchBtn = document.getElementById('searchBtn');
+    const searchInput = document.getElementById('searchInput');
+    const buildingTable = document.getElementById('buildingTable');
+
+    searchBtn.addEventListener('click', () => {
+        const searchValue = searchInput.value.trim();
+        if (searchValue.length > 0) {
+            filterBuildings(searchValue);
+        } else {
+            resetFilter();
+        }
+    });
+
+    function filterBuildings(searchValue) {
+        const buildings = document.getElementsByClassName('buildingsModule');
+        for (let i = 0; i < buildings.length; i++) {
+            const buildingName = buildings[i].getElementsByTagName('td')[0].innerText;
+            if (buildingName.includes(searchValue)) {
+                buildings[i].style.display = 'table-row';
+            } else {
+                buildings[i].style.display = 'none';
+            }
+        }
+    }
+
+    function resetFilter() {
+        const buildings = document.getElementsByClassName('buildingsModule');
+        for (let i = 0; i < buildings.length; i++) {
+          buildings[i].style.display = 'table-row';
+        }
+    }
+</script>
+
+{% endblock content %}
