@@ -472,6 +472,20 @@ padding: 15px;
   color: white;
 }
 
+.filter_button {
+  background-color: #00693F;
+  border: 2px solid #00693F;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 8px;
+
+}
 
 
 @media (max-width: 750px) {

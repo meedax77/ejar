@@ -1,0 +1,48 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+  <div class="content" id="content_docs">
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> المستأجرين     </p>
+    </div>
+    <div dir="rtl">
+        <table id="contract-table" dir="rtl">
+            <colgroup>
+              <col span="1" style="width: 10%;" />
+              <col span="1" style="width: 10%;" />
+              <col span="1" style="width: 15%;" />
+              <col span="1" style="width: 20%;" />
+            </colgroup>
+            <tr>
+              <th style="color: #ffffff;">الاسم   </th>
+              <th style="color: #ffffff;"> رقم الجوال </th>
+              <th style="color: #ffffff;"> عدد العقود     </th>
+              <th style="color: #ffffff;">عدد الدفعات المستحقة   </th>
+            </tr>
+            <tbody class="contractTable">
+                {% for customer  in customers  %}
+                  <tr class="contractsModule">
+                    <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.cName }}</td>
+                    <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.cNumber }}</td>
+                    <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.contract_count }}</td>
+                    {% if customer.payment_count == None %}
+                    <td style="background-color: rgba(126, 189, 126, 0.349);">0</td>
+                    {% else %}
+                    <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.payment_count }}</td>
+                    {% endif %}
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </tbody>
+          </table>
+  </div>
+  </div>
+
+  
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content" id="content_docs">
+  <div class="title-info">
+    <i class="fa fa-chart-bar"></i>
+    <p id="numbers"> قم باختيار المبنى  </p>
+  </div>
+</div>
+
+<form method="post" dir="rtl">
+    {% csrf_token %}
+    {{ form }}
+    <button class="action-button" type="submit"> التقرير</button>
+  </form>
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,103 @@
+
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content" id="content_contract">
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> الدفعات المستلمة </p>
+    </div>
+    <div dir="rtl" id="search_add">
+        <form method="get" dir="rtl" style="padding-right: 20px;">
+            <label for="filter_start_date">  من تاريخ:</label>
+            <input class="filter_button" style="background-color: #ffffff;"  type="date" id="filter_start_date" name="filter_start_date" value="{{ filter_start_date }}">
+        
+            <label for="filter_end_date">  حتى تاريخ:</label>
+            <input class="filter_button" style="background-color: #ffffff;" type="date" id="filter_end_date" name="filter_end_date" value="{{ filter_end_date }}">
+        
+            <button type="submit" class="action-button">تصفية</button>
+        </form>
+      </div>
+    </div>
+    <br><br>
+    {% if residential_revenue is None %}
+    <h4 dir="rtl" style="padding-right: 20px;">اجمالي الايراد من العقود السكنية: 0 ريال</h4>
+{% else %}
+    <h4 dir="rtl" style="padding-right: 20px;">اجمالي الايراد من العقود السكنية: {{ residential_revenue|floatformat:2 }} ريال</h4>
+{% endif %}
+    <br>
+    {% if commercial_revenue is None %}
+    <h4 dir="rtl" style="padding-right: 20px;">اجمالي الايراد من العقود التجارية بدون الضريبة: 0 ريال </h4>
+    {% else %}
+    <h4 dir="rtl" style="padding-right: 20px;">اجمالي الايراد من العقود التجارية بدون الضريبة: {{ commercial_revenue|floatformat:2 }} ريال </h4>
+    {% endif %}
+
+    {% if vat_revenue is None %}
+    <h4 dir="rtl" style="padding-right: 20px;">ضريبة القيمة المضافة: 0  </h4>
+    {% else %}
+    <h4 dir="rtl" style="padding-right: 20px;">ضريبة القيمة المضافة: {{ vat_revenue|floatformat:2 }}  </h4>
+    {% endif %}
+
+    {% if total_commercial_revenue is None %}
+    <h4 dir="rtl" style="padding-right: 20px;">اجمالي الايراد من العقود التجارية شاملة الضريبة: 0 ريال</h4>
+    {% else %}
+    <h4 dir="rtl" style="padding-right: 20px;">اجمالي الايراد من العقود التجارية شاملة الضريبة: {{ total_commercial_revenue|floatformat:2 }} ريال</h4>
+    {% endif %}
+
+    <br>
+    {% if total_revenue is None %}
+    <h3 dir="rtl" style="padding-right: 20px;">اجمالي الايراد: 0 ريال</h3>
+    {% else %}
+    <h3 dir="rtl" style="padding-right: 20px;">اجمالي الايراد: {{ total_revenue|floatformat:2 }} ريال</h3>
+    {% endif %}
+
+    <br>
+    <table id="contract-table" dir="rtl">
+      <colgroup>
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col span="1" style="width: 20%;" />
+        <col span="1" style="width: 15%;" />
+      </colgroup>
+      <tr>
+        <th class="datenone" style="color: #ffffff;">   المبلغ المستلم </th>
+        <th class="datenone" style="color: #ffffff;">   تاريخ الاستلام </th>
+        <th class="datenone" style="color: #ffffff;" >طريقة السداد </th>
+        <th style="color: #ffffff;" > رقم العقد   </th>
+        <th style="color: #ffffff;" >  المستأجر   </th>
+      </tr>
+      <table dir="rtl"
+      <colgroup>
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col span="1" style="width: 20%;" />
+        <col span="1" style="width: 15%;" />
+      </colgroup>
+      <tbody class="contractTable">
+        {% for payment in payments %}
+        <tr class="contractsModule">
+          <td class="datenone" style="background-color: rgba(126, 189, 126, 0.349);">{{ payment.received_amount }}</th>
+          <td class="datenone"  style="background-color: rgba(126, 189, 126, 0.349);">{{ payment.received_date }}</th>
+          <td class="datenone"  style="background-color: rgba(126, 189, 126, 0.349);">{{ payment.payment_method }}</th>
+          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ payment.payment.contract.contractNumber }}</th>
+          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ payment.payment.contract.customer }}</th>
+
+             {% endfor %}
+    </tbody>
+    </tr>
+      </table>
+    </table>
+    <!-- Add Note Modal -->
+
+
+  </div>
+
+
+
+
+
+
+{% endblock content %}

@@ -5,11 +5,11 @@
 <div class="content" id="content_docs">
     <div class="title-info">
       <i class="fa fa-chart-bar"></i>
-      <p id="numbers"> تقارير فردية </p>
+      <p id="numbers"> تقارير تفصيلية </p>
     </div>
     <div class="button_div">
     <a class="button_report" href="{% url 'generate_report' %}">تقرير تفصيلي للمستأجر</a>
-    <a class="button_report" href="">تقرير تفصيلي للمبنى</a>
+    <a class="button_report" href="{% url 'generate_building_report' %}">تقرير تفصيلي للمبنى</a>
   </div>
   </div>
 
@@ -20,9 +20,9 @@
       <p id="numbers"> تقارير عامة </p>
     </div>
     <div class="button_div">
-      <a class="button_report" href="">تقرير المستأجرين </a>
-      <a class="button_report" href="">تقرير العقود </a>
-      <a class="button_report" href="">تقرير المباني </a>
+      <a class="button_report" href="{% url 'customers_report' %}">تقرير المستأجرين </a>
+      <a class="button_report" href="{% url 'contract_report' %}">تقرير العقود </a>
+      <a class="button_report" href="{% url 'buildings_report' %}">تقرير المباني </a>
     </div>
   </div>
 
@@ -32,9 +32,8 @@
       <p id="numbers"> تقارير مالية </p>
     </div>
     <div class="button_div">
-      <a class="button_report" href="">تقرير الدفعات المستحقة</a>
-      <a class="button_report" href="">تقرير الايراد العام</a>
-      <a class="button_report" href="">تقرير الضريبة </a>
+      <a class="button_report" href="{% url 'payment_report' %}">تقرير الايراد العام </a>
+      <a class="button_report" href="{% url 'vat_report' %}">تقرير الضريبة </a>
     </div>
   </div>
 

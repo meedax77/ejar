@@ -1,0 +1,77 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content" id="content_docs">
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> تقرير المبنى:  {{ customer.cName }}   </p>
+    </div>
+    <div dir="rtl" style="padding-right: 20px;">
+        <p>نوع المبنى : {{ building.bKind }}</p>
+        <br>
+        <p>رقم الصك : {{ building.dID }}</p>
+        <br>
+        <p>اسم المبنى  : {{ building.bName }}</p>
+        <br>
+        <p> عنوان المبنى : {{ building.bAddress }}</p>
+        <br>
+        <p> صورة الصك : {{ building.dImage }}</p>
+        <br>
+        <p>صورة المبنى : {{ building.bimage }}</p>
+    </div>
+  </div>
+
+
+  <div class="content" id="content_docs">
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> الوحدات     </p>
+    </div>
+    <div dir="rtl">
+        <table id="contract-table" dir="rtl">
+            <colgroup>
+              <col span="1" style="width: 10%;" />
+              <col span="1" style="width: 10%;" />
+              <col span="1" style="width: 20%;" />
+              <col span="1" style="width: 15%;" />
+            </colgroup>
+            <tr>
+              <th style="color: #ffffff;">رقم الوحدة  </th>
+              <th style="color: #ffffff;"> اسم الوحدة</th>
+              <th style="color: #ffffff;">رقم العقد ان وجد </th>
+              <th style="color: #ffffff;">اسم المستأجر ان وجد</th>
+            </tr>
+            <tbody class="contractTable">
+                {% for unit in units %}
+                  <tr class="contractsModule">
+                    <td style="background-color: rgba(126, 189, 126, 0.349);">{{ unit.uNumber }}</td>
+                    <td style="background-color: rgba(126, 189, 126, 0.349);">{{ unit.uName }}</td>
+                    <td style="background-color: rgba(126, 189, 126, 0.349);">
+                        {% for contract in contracts %}
+                        {% if contract.unit == unit %}
+                          {{ contract.contractNumber }}
+                        {% endif %}
+                      {% endfor %}
+                    </td>
+                    <td style="background-color: rgba(126, 189, 126, 0.349);">
+                      {% for contract in contracts %}
+                        {% if contract.unit == unit %}
+                          {{ contract.customer.cName }}
+                        {% endif %}
+                      {% endfor %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </tbody>
+          </table>
+  </div>
+  </div>
+
+  
+
+
+
+
+{% endblock content %}

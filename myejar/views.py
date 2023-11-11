@@ -1,10 +1,11 @@
 import datetime
 from decimal import Decimal
 from pyexpat import model
+from django.forms import DecimalField
 from django.http import HttpResponse
 from django.shortcuts import render, redirect,get_object_or_404
 from .models import Customers, Payment_recived, Units, Buildings, Payment, Contracts, Login
-from .forms import CustomerForm,CustomerSelectForm, RegisterForm, PaymentReciveForm, UnitForm, BuildingForm, ContractForm, PaymentForm, PaymentFormSet
+from .forms import CustomerForm,CustomerSelectForm, BuildingSelectForm, RegisterForm, PaymentReciveForm, UnitForm, BuildingForm, ContractForm, PaymentForm, PaymentFormSet
 from django.contrib import messages
 from django.views.generic import ListView
 from django.views.generic.edit import (
@@ -340,6 +341,8 @@ def print_payment_received(request, received_payment_id):
 
 
 #---------------------------------------------------------
+from django.db.models import Sum
+
 @login_required(login_url="login")
 def generate_report(request):
     if request.method == 'POST':
@@ -350,17 +353,17 @@ def generate_report(request):
             # Retrieve contracts related to the selected customer
             contracts = Contracts.objects.filter(customer=customer)
             
-            # Retrieve payments related to the contracts
-            payments = Payment.objects.filter(contract__in=contracts)
+            # Calculate the sum of received_amount of all contracts
+            total_received_amount = Payment_recived.objects.filter(payment__contract__in=contracts).aggregate(total_received_amount=Sum('received_amount'))['total_received_amount']
             
-            # Retrieve received payments related to the payments
-            received_payments = Payment_recived.objects.filter(payment__in=payments)
+            # Calculate the sum of payment amount of all contracts
+            total_payment_amount = Payment.objects.filter(contract__in=contracts).aggregate(total_payment_amount=Sum('amount'))['total_payment_amount']
             
             context = {
                 'customer': customer,
                 'contracts': contracts,
-                'payments': payments,
-                'received_payments': received_payments,
+                'total_received_amount': total_received_amount,
+                'total_payment_amount': total_payment_amount,
             }
             
             return render(request, 'report.html', context)
@@ -369,29 +372,180 @@ def generate_report(request):
     
     return render(request, 'select_customer.html', {'form': form})
 
-#--------------------
-import pywhatkit
 
-def send_whatsapp_message(phone_number, message):
+#----------------------------------
+
+
+@login_required(login_url="login")
+def generate_building_report(request):
+    if request.method == 'POST':
+        form = BuildingSelectForm(request.POST)
+        if form.is_valid():
+            building = form.cleaned_data['building']
+            
+            # Retrieve all units related to the selected building
+            units = Units.objects.filter(building=building)
+            
+            # Retrieve contracts related to the selected building
+            contracts = Contracts.objects.filter(unit__in=units)
+            
+            context = {
+                'building': building,
+                'units': units,
+                'contracts': contracts,
+            }
+            
+            return render(request, 'building_report.html', context)
+    else:
+        form = BuildingSelectForm()
     
-    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-    message = client.messages.create(
-        body=message,
-        from_='whatsapp:' + settings.TWILIO_PHONE_NUMBER,
-        to='whatsapp:' + phone_number
+    return render(request, 'select_building.html', {'form': form})
+
+
+#--------------------------------------
+from django.db.models import Count, OuterRef, Subquery
+
+
+@login_required(login_url="login")
+def customers_report(request):
+    payment_subquery = Payment.objects.filter(
+        contract__customer=OuterRef('pk'),
+        amount__gt=0
+    ).values('contract__customer').annotate(payment_count=Count('pk')).values('payment_count')
+
+    customers = Customers.objects.annotate(
+        contract_count=Count('contracts'),
+        payment_count=Subquery(payment_subquery)
     )
-    print('WhatsApp message sent:', message.sid)
 
-def check_payment_due_date(request):
-    due_date = date(2023, 11, 8)
-    current_date = date.today()
-
-    if current_date >= due_date:
-        numbers = ['+966532256416', '+966530864596', '+966540843438']
-        phone_number = numbers
-        message = 'حلت الدفعة للعميل: ريان بمبلغ وقدره 500 ريال'
-        send_whatsapp_message(phone_number, message)
-
-    return HttpResponse('Payment due date checked.')
+    return render(request, 'customers_report.html', {'customers': customers})
 
 
+
+#---------------------------------------
+from datetime import date
+
+@login_required(login_url="login")
+def contract_report(request):
+    filter_date = request.GET.get('filter_date')
+    filter_contract_kind = request.GET.get('filter_contract_kind')
+
+    contracts = Contracts.objects.all()
+
+    if filter_date:
+        contracts = contracts.filter(startDate__lte=filter_date, endDate__gte=filter_date)
+
+    if filter_contract_kind:
+        contracts = contracts.filter(contract_kind=filter_contract_kind)
+
+    today = date.today()
+    active_contracts_count = contracts.filter(startDate__lte=today, endDate__gte=today).count()
+    upcoming_contracts_count = contracts.filter(startDate__gt=today).count()
+    overdue_contracts_count = contracts.filter(endDate__lt=today).count()
+
+    return render(request, 'contract_report.html', {
+        'contracts': contracts,
+        'active_contracts_count': active_contracts_count,
+        'upcoming_contracts_count': upcoming_contracts_count,
+        'overdue_contracts_count': overdue_contracts_count,
+    })
+
+
+#--------------------------------------------
+from django.db.models import Q
+
+@login_required(login_url="login")
+def buildings_report(request):
+    filter_b_kind = request.GET.get('filter_b_kind')
+    buildings = Buildings.objects.all()
+    buildings = Buildings.objects.annotate(unit_count=Count('units'))
+
+    count_commercial = buildings.filter(bKind="تجاري").count()
+    count_residential = buildings.filter(bKind="سكني").count()
+    count_mixed = buildings.filter(bKind="سكني وتجاري").count()
+
+    if filter_b_kind:
+        buildings = buildings.filter(bKind=filter_b_kind)
+
+    return render(request, 'buildings_report.html', {
+        'buildings': buildings,
+        'count_commercial': count_commercial,
+        'count_residential': count_residential,
+        'count_mixed': count_mixed,
+    })
+
+
+#--------------------------------------
+
+@login_required(login_url="login")
+def payment_report(request):
+    filter_start_date = request.GET.get('filter_start_date')
+    filter_end_date = request.GET.get('filter_end_date')
+
+    payments = Payment_recived.objects.all().select_related('payment__contract', 'payment__contract__customer')
+
+    if filter_start_date and filter_end_date:
+        payments = payments.filter(received_date__range=[filter_start_date, filter_end_date])
+
+    payments = payments.order_by('-received_date')
+
+    # Calculate the required sums
+    residential_revenue = payments.filter(payment__contract__contract_kind='سكني').aggregate(Sum('received_amount'))['received_amount__sum']
+    commercial_payments = payments.filter(payment__contract__contract_kind='تجاري')
+    commercial_revenue = commercial_payments.aggregate(Sum('received_amount'))['received_amount__sum']
+    total_commercial_revenue = 0
+    total_revenue = payments.aggregate(Sum('received_amount'))['received_amount__sum']
+
+    vat_revenue = commercial_payments.aggregate(Sum('received_amount'))['received_amount__sum']
+    if vat_revenue is not None:
+        vat_revenue = vat_revenue * Decimal('0.15')
+
+    if commercial_revenue is not None:
+        commercial_revenue = commercial_revenue * Decimal('0.85')
+
+    for payment in commercial_payments:
+        total_commercial_revenue = commercial_revenue + (vat_revenue or Decimal('0'))
+
+    return render(request, 'payment_report.html', {
+        'payments': payments,
+        'filter_start_date': filter_start_date,
+        'filter_end_date': filter_end_date,
+        'residential_revenue': residential_revenue,
+        'commercial_revenue': commercial_revenue,
+        'vat_revenue': vat_revenue,
+        'total_commercial_revenue': total_commercial_revenue,
+        'total_revenue': total_revenue,
+    })
+
+
+#--------------------------------
+from django.db.models import F, DecimalField, FloatField
+from django.db.models.functions import Cast
+
+@login_required(login_url="login")
+def vat_report(request):
+    filter_start_date = request.GET.get('filter_start_date')
+    filter_end_date = request.GET.get('filter_end_date')
+
+    payments = Payment_recived.objects.filter(payment__contract__contract_kind='تجاري')
+
+    if filter_start_date and filter_end_date:
+        payments = payments.filter(received_date__range=[filter_start_date, filter_end_date])
+
+    payments = payments.annotate(
+        vat=Cast(F('received_amount') * 0.15, output_field=DecimalField()),
+        amount_without_vat=Cast(F('received_amount') * 0.85, output_field=DecimalField()),
+    ).order_by('-received_date')
+
+    payment_amount_without_vat_sum = payments.aggregate(Sum('amount_without_vat'))['amount_without_vat__sum']
+    vat_sum = payments.aggregate(Sum('vat'))['vat__sum']
+    total_commercial_revenue_sum = payments.aggregate(Sum('received_amount'))['received_amount__sum']
+
+    return render(request, 'vat_report.html', {
+        'payments': payments,
+        'filter_start_date': filter_start_date,
+        'filter_end_date': filter_end_date,
+        'payment_amount_without_vat_sum': payment_amount_without_vat_sum,
+        'vat_sum': vat_sum,
+        'total_commercial_revenue_sum': total_commercial_revenue_sum,
+    })

@@ -1,0 +1,72 @@
+
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content" id="content_contract">
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> المباني </p>
+    </div>
+    <div dir="rtl" id="search_add">
+        <form method="get" action="" dir="rtl" style="padding-right: 20px;">
+            <label for="filter_b_kind"> نوع المباني:</label>
+            <select id="filter_b_kind" name="filter_b_kind">
+                <option value="">الكل</option>
+                <option value="سكني" {% if request.GET.filter_b_kind == "سكني" %}selected{% endif %}>سكني</option>
+                <option value="تجاري" {% if request.GET.filter_b_kind == "تجاري" %}selected{% endif %}>تجاري</option>
+                <option value="سكني وتجاري" {% if request.GET.filter_b_kind == "سكني وتجاري" %}selected{% endif %}>سكني وتجاري</option>
+            </select>
+    
+            <button type="submit" class="action-button"> تصفية</button>
+        </form>
+      </div>
+    </div>
+    <br><br>
+    <h4 dir="rtl" style="padding-right: 20px;">اجمالي المباني التجارية  : {{ count_commercial }}</h4>
+    <h4 dir="rtl" style="padding-right: 20px;">اجمالي المباني السكنية : {{ count_residential }}</h4>
+    <h4 dir="rtl" style="padding-right: 20px;">اجمالي المباني السكنية والتجارية : {{ count_mixed }}</h4>
+    <br>
+    <table id="contract-table" dir="rtl">
+      <colgroup>
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col span="1" style="width: 20%;" />
+      </colgroup>
+      <tr>
+        <th class="datenone" style="color: #ffffff;">   رقم الصك</th>
+        <th class="datenone" style="color: #ffffff;">   اسم المبنى</th>
+        <th class="datenone" style="color: #ffffff;" >نوع المبنى</th>
+        <th style="color: #ffffff;" > عدد الوحدات  </th>
+      </tr>
+      <table dir="rtl"
+      <colgroup>
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col class="datenone" span="1" style="width: 10%;" />
+        <col span="1" style="width: 20%;" />
+      </colgroup>
+      <tbody class="contractTable">
+      {% for building in buildings %}
+        <tr class="contractsModule">
+          <td class="datenone" style="background-color: rgba(126, 189, 126, 0.349);">{{ building.dID }}</th>
+          <td class="datenone"  style="background-color: rgba(126, 189, 126, 0.349);">{{ building.bName }}</th>
+          <td class="datenone"  style="background-color: rgba(126, 189, 126, 0.349);">{{ building.bKind }}</th>
+          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ building.unit_count }}</th>
+             {% endfor %}
+    </tbody>
+    </tr>
+      </table>
+    </table>
+    <!-- Add Note Modal -->
+
+
+  </div>
+
+
+
+
+
+
+{% endblock content %}

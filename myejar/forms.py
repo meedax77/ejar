@@ -81,3 +81,7 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ["username", "first_name" ,"email", "password1", "password2"]
+
+
+class BuildingSelectForm(forms.Form):
+    building = forms.ModelChoiceField(queryset=Buildings.objects.all(), label='  المبنى')

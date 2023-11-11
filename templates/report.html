@@ -7,7 +7,7 @@
       <i class="fa fa-chart-bar"></i>
       <p id="numbers"> تقرير المستأجر:  {{ customer.cName }}   </p>
     </div>
-    <div dir="rtl">
+    <div dir="rtl" style="padding-right: 20px;">
         <p>نوع المستأجر : {{ customer.ckind }}</p>
         <br>
         <p>رقم الإثبات : {{ customer.cID }}</p>
@@ -136,45 +136,15 @@
             {% empty %}
               <li>No contracts found.</li>
             {% endfor %}
+<br><br>
+
+<h3 style="padding-right: 20px;">  اجمالي المبالغ المستلمة: {{ total_received_amount }} ريال</h3>
+
+<h3 style="padding-right: 20px;">اجمالي المبالغ المتبقية  : {{ total_payment_amount }} ريال </h3>
   </div>
 
 
-  <div>
-    <p>Total Payment Amount: <span id="totalPayment"></span></p>
-    <p>Total Received Payments: <span id="totalReceived"></span></p>
-  </div>
-  </div>
-  <br>
-  <p>المبلغ المتبقي: <span id="remainingAmount"></span></p>
-  <br>
 
-
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).ready(function() {
-    // Calculate and display the remaining payment amount
-    function calculateRemainingAmount() {
-      var totalReceivedAmount = 0;
-      $('.previousPaymentsModule').each(function() {
-        var receivedAmount = parseFloat($(this).find('td:nth-child(1)').text());
-        totalReceivedAmount += receivedAmount;
-      });
-      var contractAmount = parseFloat('{{ contract.total_amount }}');
-      var remainingAmount = contractAmount - totalReceivedAmount;
-      $('#remainingAmount').text(remainingAmount.toFixed(2));
-    }
-
-    // Call the calculateRemainingAmount function initially
-    calculateRemainingAmount();
-
-    // Call the calculateRemainingAmount function whenever a new received payment is added or removed
-    $('#previousPaymentTable').on('DOMSubtreeModified', function() {
-      calculateRemainingAmount();
-    });
-  });
-</script>
 
 
 <!-- Display other customer information as needed -->

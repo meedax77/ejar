@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<div dir="rtl">
+<div dir="rtl" style="padding-right: 20px;">
     <p>رقم العقد: {{ contract.contractNumber }}</p>
     <br>
     <p> نوع العقد: {{ contract.contract_kind }}</p>
@@ -35,7 +35,7 @@
         <i class="fa fa-chart-bar"></i>
         <p id="numbers"> الدفعات </p>
     </div>
-    <div dir="rtl">
+    <div dir="rtl" style="padding-right: 20px;">
         <a dir="rtl" id="addBtn" class="action-button" href="{% url 'create_payment' contract.id %}">
             إضافة دفعة جديدة +
         </a>

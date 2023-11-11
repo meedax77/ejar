@@ -1,6 +1,6 @@
 from django.urls import include, path
 from . import views
-from .views import  ContractCreate,generate_report,payment_received,check_payment_due_date, create_payment, contract_detail
+from .views import  ContractCreate,generate_report, vat_report,  buildings_report, contract_report, customers_report,payment_received, create_payment, contract_detail,generate_building_report
 
 
 
@@ -37,9 +37,15 @@ urlpatterns = [
     path('payment/received/<int:received_payment_id>/print/', views.print_payment_received, name='print_payment_received'),
     #--------------------------------------------------
     path('report/', generate_report, name='generate_report'),
+    path('generate_building_report/', generate_building_report, name='generate_building_report'),
+    path('customers_report/', customers_report, name='customers_report'),
+    path('contract-report/', contract_report, name='contract_report'),
+    path('buildings-report/', buildings_report, name='buildings_report'),
+    path('payment_report/', views.payment_report, name='payment_report'),
+    path('vat-report/', vat_report, name='vat_report'),
     #------------------------------------
     path('', include('django.contrib.auth.urls')),
-    path('check-payment-due-date/', check_payment_due_date, name='check_payment_due_date'),
+
     ]
 
 
