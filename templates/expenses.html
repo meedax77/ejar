@@ -1,0 +1,63 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content" id="content_contract">
+    <div class="title-info">
+        <i class="fa fa-chart-bar"></i>
+        <p id="numbers"> المصروفات  </p>
+    </div>
+</div>
+
+<div dir="rtl" id="search_add">
+    <a id="addBtn" class="action-button" href="{% url 'add_expenses' %}">
+        إضافة مصروف جديد +
+    </a>
+</div>
+
+<!-- Clients table -->
+<table id="clients-table" dir="rtl">
+    <colgroup>
+        <col span="1" style="width: 10%;" />
+        <col span="1" style="width: 10%;" />
+        <col span="1" style="width: 10%;" />
+        <col span="1" style="width: 10%;" />
+        <col span="1" style="width: 20%;" />
+        <col span="1" style="width: 5%;" />
+        <col span="1" style="width: 5%;" />
+    </colgroup>
+    <tr>
+        <th style="color: #ffffff;">اسم المستلم </th>
+        <th style="color: #ffffff;">تاريخ الاستلام  </th>
+        <th style="color: #ffffff;">المبلغ  </th>
+        <th style="color: #ffffff;"> المبنى </th>
+        <th style="color: #ffffff;">الخدمات </th>
+        <th style="color: #ffffff;">طباعة</th>
+        <th style="color: #ffffff;">حذف</th>
+    </tr>
+    <tbody id="customerTable">
+        {% for expenses in expensesModule %}
+        <tr class="customersModule">
+            <td style="background-color:rgb(126, 189, 126);">{{ expenses.beneficiary }}</td>
+            <td style="background-color:rgb(126, 189, 126);">{{ expenses.eDb }}</td>
+            <td style="background-color:rgb(126, 189, 126);">{{ expenses.eamount }}</td>
+            <td style="background-color:rgb(126, 189, 126);">{{ expenses.eBuilding }}</td>
+            <td style="background-color:rgb(126, 189, 126);">{{ expenses.info }}</td>
+            <td style="background-color: rgba(87, 87, 87, 0.349);"><a style="text-decoration: none; color: rgb(0, 71, 15);" href="{% url 'print_expenses' expenses.id %}" target="_blank"><i class="fa-solid fa-print"></i></a></td>
+            <td style="background-color: rgba(255, 52, 52, 0.349);">
+              <a style="text-decoration: none; color: rgb(185, 3, 3);"
+                  href="{% url 'delete_expenses' expenses.id %}">
+                  <i class="fa-solid fa-trash"></i>
+              </a>
+          </td>
+        </tr>
+        {% endfor %}
+        
+    </tbody>
+    
+</table>
+</div>
+
+
+
+{% endblock %}

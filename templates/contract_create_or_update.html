@@ -51,6 +51,14 @@
             <label for="total_amount">المبلغ الإجمالي (شامل الضريبة):</label>
             <input type="text" id="total_amount" readonly>
         </div>
+        <div id="label">
+          <label for="{{ form.endDate.id_for_label }}"> ملاحظات العقد  :</label>
+          {{ form.cNote }}
+        </div>
+        <div id="label">
+          <label for="{{ cFile.id_for_label }}">  عقد الايجار  :</label>
+          {{ form.cFile }}
+        </div>
         
  
     </div>

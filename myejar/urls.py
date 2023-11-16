@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.urls import include, path
 from . import views
 from .views import  ContractCreate,generate_report, vat_report,  buildings_report, contract_report, customers_report,payment_received, create_payment, contract_detail,generate_building_report
@@ -45,6 +46,12 @@ urlpatterns = [
     path('vat-report/', vat_report, name='vat_report'),
     #------------------------------------
     path('', include('django.contrib.auth.urls')),
+    #---------------------------------------
+    path('expenses', views.expenses, name = 'expenses'),
+    path('expenses/add/', views.add_expenses, name='add_expenses'),
+    path('delete_expenses/<int:expenses_id>/', views.delete_expenses, name='delete_expenses'),
+    path('expenses/done/<int:expenses_id>/print/', views.print_expenses, name='print_expenses'),
+
 
     ]
 

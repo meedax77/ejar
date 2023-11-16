@@ -4,8 +4,8 @@ from pyexpat import model
 from django.forms import DecimalField
 from django.http import HttpResponse
 from django.shortcuts import render, redirect,get_object_or_404
-from .models import Customers, Payment_recived, Units, Buildings, Payment, Contracts, Login
-from .forms import CustomerForm,CustomerSelectForm, BuildingSelectForm, RegisterForm, PaymentReciveForm, UnitForm, BuildingForm, ContractForm, PaymentForm, PaymentFormSet
+from .models import Customers,Expenses, Payment_recived, Units, Buildings, Payment, Contracts, Login
+from .forms import CustomerForm,CustomerSelectForm,ExpensesForm, BuildingSelectForm, RegisterForm, PaymentReciveForm, UnitForm, BuildingForm, ContractForm, PaymentForm, PaymentFormSet
 from django.contrib import messages
 from django.views.generic import ListView
 from django.views.generic.edit import (
@@ -193,6 +193,7 @@ def delete_building(request, building_id):
     if Units.objects.filter(building=building).exists():
         messages.error(request, "المبنى مرتبط بوحدات  ولن يتم حذفه حتى يتم حذف الوحدات")
         return redirect('buildings') 
+    
     
     building.delete()
     return redirect('buildings')  # Replace 'customers' with the URL name of the customer list view
@@ -388,11 +389,20 @@ def generate_building_report(request):
             
             # Retrieve contracts related to the selected building
             contracts = Contracts.objects.filter(unit__in=units)
+            expenses = Expenses.objects.filter(eBuilding=building)
+            # Calculate the sum of eamount
+            expenses_total = sum(expense.eamount for expense in expenses)
+
+            # Calculate the sum of total_amount
+            contracts_total = sum(contract.total_amount for contract in contracts)
             
             context = {
                 'building': building,
                 'units': units,
                 'contracts': contracts,
+                'expenses' : expenses,
+                'expenses_total': expenses_total,
+                'contracts_total': contracts_total,
             }
             
             return render(request, 'building_report.html', context)
@@ -549,3 +559,49 @@ def vat_report(request):
         'vat_sum': vat_sum,
         'total_commercial_revenue_sum': total_commercial_revenue_sum,
     })
+
+
+#--------------------------------------------
+@login_required(login_url="login")
+def expenses(request):
+    return render(request, 'expenses.html',{'expensesModule' : Expenses.objects.all()})
+
+#--------------------------------------------
+
+@login_required(login_url="login")
+def add_expenses(request):
+    if request.method == 'POST':
+        form = ExpensesForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('expenses')  # Replace 'customer_list' with the URL name of the customer list view
+    else:
+        form = ExpensesForm()
+    
+    return render(request, 'add_expenses.html', {'form': form})
+
+
+#----------------------------------------------
+@login_required(login_url="login")
+def delete_expenses(request, expenses_id):
+    expenses = get_object_or_404(Expenses, id=expenses_id)
+    
+    # Check if the customer is related to any contracts
+
+    expenses.delete()
+    
+    return redirect('expenses')  
+
+#-------------------------------------------------
+@login_required(login_url="login")
+def print_expenses(request, expenses_id):
+    expenses = get_object_or_404(Expenses, id=expenses_id)
+
+    # Get the related contract
+
+    # Calculate the total received amount for the contract
+
+    context = {
+        'expenses': expenses,
+    }
+    return render(request, 'print_expenses.html', context)

@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-y3rp$t@ya6$mfq1z30)x=l+-@h87y%2zkv5lg$u%+@^69#wmi6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'myejar.apps.MyejarConfig',
     'mathfilters',
     'crispy_forms',
-    'crispy_bootstrap5'
+    'crispy_bootstrap5',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -83,15 +83,33 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ejar.wsgi.application'
 
+import dj_database_url
 
+DATABASE_URL = "postgres://postgres:EF*-GFC5gc1f6DFdf14fDEB44c4CbD4*@viaduct.proxy.rlwy.net:43782/railway"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+#DATABASES = {
+#   'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+   'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME':  'ejar',
+        'USER':  'postgres',
+        'PASSWORD':  'Break567@',
+        'HOST':  'localhost',
+        'PORT':  '5432',
+
     }
+}
+
+DATABASES ={
+    "default" : dj_database_url.config(default=DATABASE_URL, conn_max_age=1000)
 }
 
 

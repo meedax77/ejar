@@ -10,18 +10,40 @@
     <div dir="rtl" style="padding-right: 20px;">
         <p>نوع المبنى : {{ building.bKind }}</p>
         <br>
+        <p>اسم العقار في الصك : {{ building.dName }}</p>
+        <br>
         <p>رقم الصك : {{ building.dID }}</p>
+        <br>
+        <p>تاريخ الصك  : {{ building.dDate }}</p>
         <br>
         <p>اسم المبنى  : {{ building.bName }}</p>
         <br>
         <p> عنوان المبنى : {{ building.bAddress }}</p>
         <br>
-        <p> صورة الصك : {{ building.dImage }}</p>
+        <p> ملاحظات المبنى  : {{ building.bNote }}</p>
         <br>
-        <p>صورة المبنى : {{ building.bimage }}</p>
+        {% if building.dImage %}
+        <a href="{{ building.dImage.url }}" download>تحميل صورة الصك</a>
+    {% else %}
+        <p>لم يتم تحميل صورة الصك</p>
+    {% endif %}
+    <br>
+    <br>
+    {% if building.bimage %}
+        <a href="{{ building.bimage }}" download>تحميل صورة المبنى</a>
+    {% else %}
+        <p>لم يتم تحميل صورة المبنى</p>
+    {% endif %}
+    <br>
+        <br>
+        <p>اجمالي قيمة العقود: {{ contracts_total|floatformat:2 }}</p>
+        <br>
+        <p>اجمالي قيمة المصاريف: {{ expenses_total|floatformat:2 }}</p>
     </div>
   </div>
 
+
+  
 
   <div class="content" id="content_docs">
     <div class="title-info">
@@ -45,16 +67,16 @@
             <tbody class="contractTable">
                 {% for unit in units %}
                   <tr class="contractsModule">
-                    <td style="background-color: rgba(126, 189, 126, 0.349);">{{ unit.uNumber }}</td>
-                    <td style="background-color: rgba(126, 189, 126, 0.349);">{{ unit.uName }}</td>
-                    <td style="background-color: rgba(126, 189, 126, 0.349);">
+                    <td style="background-color:rgb(126, 189, 126);">{{ unit.uNumber }}</td>
+                    <td style="background-color:rgb(126, 189, 126);">{{ unit.uName }}</td>
+                    <td style="background-color:rgb(126, 189, 126);">
                         {% for contract in contracts %}
                         {% if contract.unit == unit %}
                           {{ contract.contractNumber }}
                         {% endif %}
                       {% endfor %}
                     </td>
-                    <td style="background-color: rgba(126, 189, 126, 0.349);">
+                    <td style="background-color:rgb(126, 189, 126);">
                       {% for contract in contracts %}
                         {% if contract.unit == unit %}
                           {{ contract.customer.cName }}
@@ -69,6 +91,71 @@
   </div>
   </div>
 
+  <div class="content" id="content_docs">
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> العقود     </p>
+    </div>
+    <div dir="rtl">
+        <table id="contract-table" dir="rtl">
+            <colgroup>
+              <col span="1" style="width: 10%;" />
+              <col span="1" style="width: 10%;" />
+              <col span="1" style="width: 20%;" />
+              <col span="1" style="width: 15%;" />
+            </colgroup>
+            <tr>
+              <th style="color: #ffffff;">رقم العقد  </th>
+              <th style="color: #ffffff;"> اسم المستأجر</th>
+              <th style="color: #ffffff;">الوحدة    </th>
+              <th style="color: #ffffff;">المحصل من العقد   </th>
+            </tr>
+            <tbody class="contractTable">
+                {% for contract in contracts %}
+                  <tr class="contractsModule">
+                    <td style="background-color:rgb(126, 189, 126);">{{ contract.contractNumber }}</td>
+                    <td style="background-color:rgb(126, 189, 126);">{{ contract.customer }}</td>
+                    <td style="background-color:rgb(126, 189, 126);">{{ contract.unit }}</td>
+                    <td style="background-color:rgb(126, 189, 126);">{{ contract.total_amount|floatformat:2 }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </tbody>
+          </table>
+  </div>
+  </div>
+
+
+  <div class="content" id="content_docs">
+    <div class="title-info">
+      <i class="fa fa-chart-bar"></i>
+      <p id="numbers"> المصروفات     </p>
+    </div>
+    <div dir="rtl">
+        <table id="contract-table" dir="rtl">
+            <colgroup>
+              <col span="1" style="width: 10%;" />
+              <col span="1" style="width: 10%;" />
+              <col span="1" style="width: 30%;" />
+            </colgroup>
+            <tr>
+              <th style="color: #ffffff;">المستلم   </th>
+              <th style="color: #ffffff;"> الخدمات</th>
+              <th style="color: #ffffff;">المبلغ    </th>
+            </tr>
+            <tbody class="contractTable">
+                {% for expense in expenses %}
+                  <tr class="contractsModule">
+                    <td style="background-color:rgb(126, 189, 126);">{{ expense.beneficiary }}</td>
+                    <td style="background-color:rgb(126, 189, 126);">{{ expense.eamount }}</td>
+                    <td style="background-color:rgb(126, 189, 126);">{{ expense.info }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </tbody>
+          </table>
+  </div>
+  </div>
   
 
 

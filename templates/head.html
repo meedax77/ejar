@@ -9,7 +9,7 @@
   <meta name="author" content="meeda">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <title>النظام العقاري للوقف</title>
+  <title>نظام حسابات المستأجرين  </title>
   <meta name="description" content="النظام المحاسبي لوقف الفلاتة الماسوفية" />
   {% load static %}
   <link rel="icon" type="image/png" href="{% static 'img/small-logo.png' %}">
@@ -18,7 +18,7 @@
 
 </head>
 
-<body>
+<body >
   <div class="container">
 
 
@@ -61,6 +61,12 @@
           </a>
         </li>
         <li>
+          <a id="sittings" href="{% url 'expenses' %}">
+            <i class="fa-solid fa-money-check-dollar"></i>
+                        <p>المصروفات  </p>
+          </a>
+        </li>
+        <li>
           <a id="docs" href="{% url 'docs' %}">
             <i class="fa-solid fa-file-invoice"></i>
             <p> التقارير</p>
@@ -72,6 +78,7 @@
             <p>الإعدادات </p>
           </a>
         </li>
+        
         <li class="log-out">
           <a href="/logout">
             <i class="fas fa-sign-out"></i>

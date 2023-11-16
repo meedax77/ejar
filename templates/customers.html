@@ -37,9 +37,9 @@
         <tbody id="customerTable">
             {% for customer in customersModule %}
             <tr class="customersModule">
-                <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.cID }}</td>
-                <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.cName }}</td>
-                <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.cNumber }}</td>
+                <td style="background-color:rgb(126, 189, 126);">{{ customer.cID }}</td>
+                <td style="background-color:rgb(126, 189, 126);">{{ customer.cName }}</td>
+                <td style="background-color:rgb(126, 189, 126);">{{ customer.cNumber }}</td>
                 <td style="background-color: rgba(87, 87, 87, 0.349);">
                     <a style="text-decoration: none; color: rgb(0, 71, 15);"
                         href="{% url 'edit_customer' customer.cID %}">

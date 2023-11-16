@@ -1,5 +1,5 @@
 from django import forms
-from .models import Customers, Payment_recived, Units, Contracts, Buildings , Payment
+from .models import Customers, Payment_recived, Units, Contracts, Buildings , Payment, Expenses
 from decimal import Decimal
 from django.forms import formset_factory, inlineformset_factory
 from typing import Type
@@ -55,7 +55,7 @@ class ContractForm(forms.ModelForm):
 
     class Meta:
         model = Contracts
-        fields = ['contract_kind','contractNumber', 'customer', 'unit', 'startDate', 'endDate', 'payment_amount']
+        fields = ['contract_kind','contractNumber', 'customer', 'unit', 'startDate', 'endDate', 'payment_amount','cNote' , 'cFile']
         widgets = {
             'startDate': forms.DateInput(attrs={'type': 'date'}),
             'endDate': forms.DateInput(attrs={'type': 'date'}),
@@ -68,6 +68,9 @@ class BuildingForm(forms.ModelForm):
     class Meta:
         model = Buildings
         fields = '__all__'
+        widgets = {
+            'dDate': forms.DateInput(attrs={'type': 'date'}),
+        }
 
 
 
@@ -85,3 +88,12 @@ class RegisterForm(UserCreationForm):
 
 class BuildingSelectForm(forms.Form):
     building = forms.ModelChoiceField(queryset=Buildings.objects.all(), label='  المبنى')
+
+
+class ExpensesForm(forms.ModelForm):
+    class Meta:
+        model = Expenses
+        fields = '__all__'
+        widgets = {
+            'eDb': forms.DateInput(attrs={'type': 'date'}),
+        }

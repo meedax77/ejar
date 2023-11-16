@@ -3,6 +3,14 @@
     margin: 0;
 }
 
+body {
+  background: linear-gradient(212.38deg, rgba(57, 242, 113, 0.432) 0%, rgba(221, 157, 230, 0.71) 100%), url('/static/img/small-logo.png');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: auto 800px; /* Adjust the size as needed */
+}
+
+
 .container{
     display: flex;
 }
@@ -24,7 +32,7 @@
     text-transform: capitalize;
 }
 .menu{
-    background-color: #625F66;
+	background: linear-gradient(212.38deg, rgb(0, 99, 30) 20%, rgba(43, 173, 93, 0.377) 80%);
     width: 40px;
     height: 100vh;
     padding: 20px;
@@ -40,7 +48,7 @@ ul{
     height: 90%;
 }
 ul li a{
-    color: #fff;
+    color: #ffffff;
     text-decoration: none;
     display: block;
     padding: 10px;
@@ -50,6 +58,9 @@ ul li a{
     align-items: center;
     gap: 40px;
     transition: 0.3s;
+}
+ul li a p{
+font-size: 20px;
 }
 ul li a:hover, .active{
     background-color: #8A99A3;
@@ -63,7 +74,7 @@ ul li a:hover, .active{
     width: 100%;
 }
 .log-out a{
-    background-color: rgba(223, 0, 0, 0.589);
+    background-color: rgba(223, 0, 0, 0.733);
 }
 ul li a{
     font-size: 17px;
@@ -434,7 +445,7 @@ padding: 15px;
 
 .footer_sanad {
   position: fixed;
-  bottom: 260px;
+  bottom: 50px;
   left: 60px;
 }
 .footer_sanad p{

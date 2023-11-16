@@ -24,13 +24,13 @@
             <tbody class="contractTable">
                 {% for customer  in customers  %}
                   <tr class="contractsModule">
-                    <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.cName }}</td>
-                    <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.cNumber }}</td>
-                    <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.contract_count }}</td>
+                    <td style="background-color:rgb(126, 189, 126);">{{ customer.cName }}</td>
+                    <td style="background-color:rgb(126, 189, 126);">{{ customer.cNumber }}</td>
+                    <td style="background-color:rgb(126, 189, 126);">{{ customer.contract_count }}</td>
                     {% if customer.payment_count == None %}
-                    <td style="background-color: rgba(126, 189, 126, 0.349);">0</td>
+                    <td style="background-color:rgb(126, 189, 126);">0</td>
                     {% else %}
-                    <td style="background-color: rgba(126, 189, 126, 0.349);">{{ customer.payment_count }}</td>
+                    <td style="background-color:rgb(126, 189, 126);">{{ customer.payment_count }}</td>
                     {% endif %}
                   </tr>
                 {% endfor %}

@@ -2,9 +2,8 @@
 {% extends 'head.html' %}
 {% load static %}
 
+
 {% block content %}
-
-
       <div class="title-info">
         <i class="fa fa-chart-bar"></i>
         <p id="numbers">احصائيات الوقف</p>
@@ -56,12 +55,14 @@
         </thead>
         <tbody>
           {% for payment in PaymentModule %}
-            <tr>
+            <tr class="payment-row">
               <td>{{ payment.contract.customer }}</td>
               <td>{{ payment.amount }}</td>
               <td>{{ payment.payment_due }}</td>
               <td>
-                <a style="text-decoration: none; color: rgb(0, 44, 10);" href="{% url 'contract_detail' contract_id=payment.contract.id %}"><i class="fa-solid fa-eye"></i> </a>
+                <a style="text-decoration: none; color: rgb(0, 44, 10);" href="{% url 'contract_detail' contract_id=payment.contract.id %}">
+                  <i class="fa-solid fa-eye"></i>
+                </a>
               </td>
             </tr>
           {% endfor %}
@@ -81,8 +82,30 @@
   </footer>
 
 
-
-
-
+  <script>
+    // Get all the table rows with the class 'payment-row'
+    const paymentRows = document.querySelectorAll('.payment-row');
+  
+    // Iterate over each table row
+    paymentRows.forEach(row => {
+      // Get the payment due date value from the row
+      const paymentDueDateStr = row.querySelector('td:nth-child(3)').textContent;
+      const paymentDueDate = new Date(paymentDueDateStr);
+  
+      // Calculate the date one month ago
+      const oneMonthAgo = new Date();
+      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+  
+      // Compare the payment due date with one month ago
+      if (paymentDueDate < oneMonthAgo) {
+        // Change the background color of the row to red
+        row.style.backgroundColor = 'red';
+      }
+    });
+  </script>
 
 {% endblock content %}
+
+
+
+

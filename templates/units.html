@@ -43,9 +43,9 @@
       <tbody id="unitTable">
       {% for unit in unitsModule %}
         <tr class="unitsModule">
-          <td style="background-color: rgba(126, 189, 126, 0.349);">{{ unit.uName }}</th>
-          <td style="background-color: rgba(126, 189, 126, 0.349);">{{ unit.uKind2 }}</th>
-          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ unit.building }}</th>
+          <td style="background-color:rgb(126, 189, 126);">{{ unit.uName }}</th>
+          <td style="background-color:rgb(126, 189, 126);">{{ unit.uKind2 }}</th>
+          <td style="background-color:rgb(126, 189, 126);" >{{ unit.building }}</th>
           <td style="background-color: rgba(87, 87, 87, 0.349);">
             <a style="text-decoration: none; color: rgb(0, 71, 15);"
                 href="{% url 'edit_unit' unit.uNumber %}">

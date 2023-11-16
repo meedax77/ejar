@@ -22,11 +22,18 @@
     <br>
     <p> تاريخ نهاية العقد: {{ contract.endDate }}</p>
     <br>
-    <p> قيمة الايجار: {{ contract.total_amount }}</p>
+    <p> ملاحظات العقد  : {{ contract.cNote }}</p>
+    <br>
+    <p> قيمة الايجار: {{ contract.total_amount|floatformat:2 }}</p>
     <br>
     <p>المبلغ المتبقي: <span id="remainingAmount"></span></p>
     <br>
-</div>
+    {% if contract.cFile %}
+    <a href="{{ contract.cFile.url }}" download>تحميل عقد الايجار</a>
+{% else %}
+    <p>لم يتم تحميل عقد</p>
+{% endif %}
+</div> 
 
 <!-- Add more contract details here -->
 
@@ -93,7 +100,7 @@
 <div class="content" id="content_contract">
     <div class="title-info">
         <i class="fa fa-chart-bar"></i>
-        <p id="numbers"> الدفعات السابقة </p>
+        <p id="numbers"> الدفعات المستلمة </p>
     </div>
 </div>
 

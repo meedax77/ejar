@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="utf-8" />
+    <meta name="keywords" content=" وقف الفلاتة الماسوفي, نظام محاسبي عقاري ">
+    <meta name="author" content="meeda">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>سند صرف  : {{ expenses.beneficiary }}</title>
+    <meta name="description" content="النظام المحاسبي لوقف الفلاتة الماسوفية" />
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'img/small-logo.png' %}">
+    <link rel="stylesheet" href="{%static 'css/styles.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+{% load mathfilters %}
+
+
+
+<body>
+
+    <div class="container" dir="rtl">
+
+        <div class="header" id="content_home">
+            <img class="sanad_header" src="{% static 'img/header2.jpg' %}" alt="header">
+        </div>
+
+
+        <div class="info_sanad">
+            <p dir="ltr" class="sanad_num">رقم السند: {{ expenses.id }}</p>
+            <p>يدفع الى  : {{ expenses.beneficiary }}</p>
+            <br>
+            <p> في تاريخ  : {{ expenses.eDb }}</p>
+            <br>
+            <p>مبلغ وقدره : {{ expenses.eamount }} ريال / كتابة:   {{ expenses.eamounttext }}  </p>
+            <br>
+            <p>وذلك مقابل : {{ expenses.info }}</p>
+            <br>
+            <p> للعمارة : {{ expenses.eBuilding }}</p>
+            <br>
+            <br><br><br><br><br><br>
+            <p>المستلم  : {{ expenses.beneficiary }}</p>
+            <p>التوقيع  :</p>
+            <br>
+
+        </div>
+
+
+        <div class="footer_sanad">
+            <p>الختم:</p>
+            <img class="stamp" src="{% static 'img/stamp3.jpg' %}" alt="stamp">
+        </div>
+
+
+        <script>
+            window.onload = function() {
+                window.print();
+            };
+        </script>
+
+    </div>
+</body>
+</html>

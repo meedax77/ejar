@@ -79,11 +79,11 @@
       <tbody class="contractTable">
         {% for payment in payments %}
         <tr class="contractsModule">
-          <td class="datenone" style="background-color: rgba(126, 189, 126, 0.349);">{{ payment.received_amount }}</th>
-          <td class="datenone"  style="background-color: rgba(126, 189, 126, 0.349);">{{ payment.received_date }}</th>
-          <td class="datenone"  style="background-color: rgba(126, 189, 126, 0.349);">{{ payment.payment_method }}</th>
-          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ payment.payment.contract.contractNumber }}</th>
-          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ payment.payment.contract.customer }}</th>
+          <td class="datenone" style="background-color:rgb(126, 189, 126);">{{ payment.received_amount }}</th>
+          <td class="datenone"  style="background-color:rgb(126, 189, 126);">{{ payment.received_date }}</th>
+          <td class="datenone"  style="background-color:rgb(126, 189, 126);">{{ payment.payment_method }}</th>
+          <td style="background-color:rgb(126, 189, 126);" >{{ payment.payment.contract.contractNumber }}</th>
+          <td style="background-color:rgb(126, 189, 126);" >{{ payment.payment.contract.customer }}</th>
 
              {% endfor %}
     </tbody>

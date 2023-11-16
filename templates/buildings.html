@@ -50,9 +50,9 @@
       <tbody id="buildingTable">
       {% for building in buildingsModule %}
         <tr class="buildingsModule">
-          <td style="background-color: rgba(126, 189, 126, 0.349);">{{ building.bName }}</td>
-          <td style="background-color: rgba(126, 189, 126, 0.349);">{{ building.dID }}</td>
-          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ building.bAddress }}</td>
+          <td style="background-color: rgb(126, 189, 126);">{{ building.bName }}</td>
+          <td style="background-color: rgb(126, 189, 126);">{{ building.dID }}</td>
+          <td style="background-color: rgb(126, 189, 126);" >{{ building.bAddress }}</td>
           <td style="background-color: rgba(87, 87, 87, 0.349);">
             <a style="text-decoration: none; color: rgb(0, 71, 15);"
                 href="{% url 'edit_building' building.dID %}">

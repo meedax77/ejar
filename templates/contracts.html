@@ -52,12 +52,12 @@
       <tbody class="contractTable">
       {% for contract in contractModule %}
         <tr class="contractsModule">
-          <td class="datenone" style="background-color: rgba(126, 189, 126, 0.349);">{{ contract.contractNumber }}</th>
-          <td class="datenone"  style="background-color: rgba(126, 189, 126, 0.349);">{{ contract.startDate }}</th>
-          <td class="datenone"  style="background-color: rgba(126, 189, 126, 0.349);">{{ contract.endDate }}</th>
-          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ contract.customer }}</th>
-          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ contract.unit }}</th>
-          <td style="background-color: rgba(126, 189, 126, 0.349);" >{{ contract.total_amount }}</th>
+          <td class="datenone" style="background-color:rgb(126, 189, 126);">{{ contract.contractNumber }}</th>
+          <td class="datenone"  style="background-color:rgb(126, 189, 126);">{{ contract.startDate }}</th>
+          <td class="datenone"  style="background-color:rgb(126, 189, 126);">{{ contract.endDate }}</th>
+          <td style="background-color:rgb(126, 189, 126);" >{{ contract.customer }}</th>
+          <td style="background-color:rgb(126, 189, 126);" >{{ contract.unit }}</th>
+          <td style="background-color:rgb(126, 189, 126);" >{{ contract.total_amount }}</th>
           <td style="background-color: rgba(87, 87, 87, 0.349);"><a style="text-decoration: none; color: rgb(0, 71, 15);" href="{% url 'contract_detail' contract.id %}">الدفعات</a></th>
             <td style="background-color: rgba(255, 52, 52, 0.349);">
               <a style="text-decoration: none; color: rgb(185, 3, 3);"
