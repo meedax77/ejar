@@ -17,10 +17,10 @@ class Customers (models.Model):
     ("مؤسسة","مؤسسة"),
 ]
     ckind = models.CharField(max_length=50, choices=kind, verbose_name="نوع المستأجر")
-    cID = models.IntegerField(primary_key=True,max_length= 10, verbose_name="رقم الاثبات")
+    cID = models.BigIntegerField(primary_key=True,max_length= 10, verbose_name="رقم الاثبات")
     cDob = models.DateField(verbose_name="تاريخ الميلاد")
     cName = models.CharField(max_length=50 , verbose_name="اسم المستأجر")
-    cNumber = models.IntegerField(max_length=10 , verbose_name="رقم المستأجر")
+    cNumber = models.BigIntegerField(max_length=10 , verbose_name="رقم المستأجر")
     cIdImage = models.ImageField(upload_to= 'Idphotos/%y/%m/%d', blank=True, verbose_name="صورة الاثبات ")
     
     def __str__(self):
@@ -75,8 +75,8 @@ class Units (models.Model):
     uNumber = models.IntegerField( max_length=10, verbose_name="رقم الوحدة - يجب ان يكون رقم خاص للوحدة ")
     uRoomsNo = models.IntegerField(max_length=10, blank= True, verbose_name=" عدد الغرف ")
     uFloor = models.IntegerField(max_length=10, blank= True,verbose_name="الدور  ")
-    uElectricity = models.IntegerField(max_length=10, blank= True, verbose_name="رقم سداد الكهرباء  ",null=True,)
-    uWater = models.IntegerField(max_length=10, blank= True, verbose_name=" رقم سداد المياه ",null=True,)
+    uElectricity = models.BigIntegerField(max_length=10, blank= True, verbose_name="رقم سداد الكهرباء  ",null=True,)
+    uWater = models.BigIntegerField(max_length=10, blank= True, verbose_name=" رقم سداد المياه ",null=True,)
     
     def __str__(self):
         return self.uName
@@ -100,7 +100,7 @@ class Contracts(models.Model):
     ("الغي","الغي"),
     ]
     contract_kind = models.CharField(max_length=50,  choices=kind, verbose_name="سكني ام تجاري")
-    contractNumber = models.IntegerField(max_length=50, verbose_name= "رقم العقد الالكتروني")
+    contractNumber = models.BigIntegerField(max_length=50, verbose_name= "رقم العقد الالكتروني")
     customer = models.ForeignKey(Customers, on_delete= models.PROTECT, default= True, verbose_name="المستأجر")
     unit = models.ForeignKey(Units, on_delete= models.SET_DEFAULT, default= True, verbose_name="الوحدة")
     startDate = models.DateField(verbose_name="تاريخ البدء")
@@ -178,7 +178,7 @@ class Login(models.Model):
 
 class Expenses (models.Model):
     beneficiary = models.CharField(max_length=80 , verbose_name="اسم المستلم")
-    bNumber = models.IntegerField(max_length= 10, verbose_name="رقم الجوال ")
+    bNumber = models.BigIntegerField(max_length= 10, verbose_name="رقم الجوال ")
     eamount = models.IntegerField(max_length= 10, verbose_name="المبلغ ")
     eamounttext = models.CharField(max_length= 100, verbose_name="المبلغ كتابة ", blank=True)
     info  = models.TextField(max_length=500, blank=True,verbose_name="مقابل ")
