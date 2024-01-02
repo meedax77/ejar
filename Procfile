@@ -1,0 +1,1 @@
+web: gunicorn ejar.wsgi --log-file -
