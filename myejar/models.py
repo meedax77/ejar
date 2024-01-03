@@ -18,7 +18,6 @@ class Customers(models.Model):
         ("فرد", "فرد"),
         ("مؤسسة", "مؤسسة"),
     ]
-    id = models.BigAutoField(primary_key=True)
     ckind = models.CharField(max_length=50, choices=kind, verbose_name="نوع المستأجر")
     cID = models.BigIntegerField(verbose_name="رقم الاثبات")
     cDob = models.DateField(verbose_name="تاريخ الميلاد")
