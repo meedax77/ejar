@@ -165,6 +165,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 
+CSRF_TRUSTED_ORIGINS = ['https://www.waqf1.com', 'https://waqf1.com']
+
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'login'
