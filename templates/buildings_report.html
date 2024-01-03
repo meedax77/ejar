@@ -9,6 +9,7 @@
       <p id="numbers"> المباني </p>
     </div>
     <div dir="rtl" id="search_add">
+      {% csrf_token %}
         <form method="get" action="" dir="rtl" style="padding-right: 20px;">
             <label for="filter_b_kind"> نوع المباني:</label>
             <select id="filter_b_kind" name="filter_b_kind">

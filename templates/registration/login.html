@@ -37,6 +37,7 @@
 				<div class="top_link"><a href="https://maps.app.goo.gl/AU1yooz82z3GToc78"><img src="https://drive.google.com/u/0/uc?id=16U__U5dJdaTfNGobB_OpwAJ73vM50rPV&export=download" alt="">عنوان الجمعية</a></div>
 				<div class="contact">
                     <form method="post">
+                        {% csrf_token %}
                         <h3> تسجل الدخول للموظفين</h3>
                         {% csrf_token %}{{form|crispy}}
                         <button type="submit" class="submit">الدخول للمنصة</button>

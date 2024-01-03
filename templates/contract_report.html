@@ -9,6 +9,7 @@
       <p id="numbers"> العقود </p>
     </div>
     <div dir="rtl" id="search_add">
+      {% csrf_token %}
         <form method="get" action="" style="padding-right: 20px;" dir="rtl" style="padding-right: 20px;">
             <label for="filter_date">  اختيار التاريخ ضمن العقد:</label>
             <input class="filter_button" style="background-color: #ffffff;" type="date" id="filter_date" name="filter_date" value="{{ request.GET.filter_date }}">
