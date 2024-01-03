@@ -11,23 +11,27 @@ from django.db.models.signals import post_save
 from django.forms import ValidationError
 
 #customers
-class Customers (models.Model):
+from django.db import models
+
+class Customers(models.Model):
     kind = [
-    ("فرد","فرد"),
-    ("مؤسسة","مؤسسة"),
-]
+        ("فرد", "فرد"),
+        ("مؤسسة", "مؤسسة"),
+    ]
+    id = models.BigAutoField(primary_key=True)
     ckind = models.CharField(max_length=50, choices=kind, verbose_name="نوع المستأجر")
-    cID = models.BigIntegerField(primary_key=True,max_length= 10, verbose_name="رقم الاثبات")
+    cID = models.BigIntegerField(verbose_name="رقم الاثبات")
     cDob = models.DateField(verbose_name="تاريخ الميلاد")
-    cName = models.CharField(max_length=50 , verbose_name="اسم المستأجر")
-    cNumber = models.BigIntegerField(max_length=10 , verbose_name="رقم المستأجر")
-    cIdImage = models.ImageField(upload_to= 'Idphotos/%y/%m/%d', blank=True, verbose_name="صورة الاثبات ")
-    
+    cName = models.CharField(max_length=50, verbose_name="اسم المستأجر")
+    cNumber = models.BigIntegerField(max_length=10, verbose_name="رقم المستأجر")
+    cIdImage = models.ImageField(upload_to='Idphotos/%y/%m/%d', blank=True, verbose_name="صورة الاثبات")
+
     def __str__(self):
         return self.cName
+
     class Meta:
         verbose_name = 'المستأجرين'
-    
+
 
 
 
