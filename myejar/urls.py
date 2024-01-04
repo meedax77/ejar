@@ -3,7 +3,7 @@ from django.urls import include, path
 from . import views
 from .views import  ContractCreate,generate_report, vat_report,  buildings_report, contract_report, customers_report,payment_received, create_payment, contract_detail,generate_building_report
 
-
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.dashboared,  name = 'dashboared'),
@@ -57,7 +57,8 @@ urlpatterns = [
 
 
 
-
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 
