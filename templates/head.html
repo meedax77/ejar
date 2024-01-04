@@ -634,10 +634,13 @@ padding: 15px;
         </li>
         
         <li class="log-out">
-          <a href="{% url 'logout' %}">
-            <i class="fas fa-sign-out"></i>
-            <p>خروج </p>
-          </a>
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">
+              <i class="fas fa-sign-out"></i>
+              <p>خروج </p>
+            </button>
+          </form>
         </li>
       </ul>
     </div>

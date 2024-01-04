@@ -6,6 +6,7 @@ from .views import  ContractCreate,generate_report, vat_report,  buildings_repor
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('', include('django.contrib.auth.urls')),
     path('', views.dashboared,  name = 'dashboared'),
     path('login', views.login, name = 'login'),
     path('customers', views.customers, name = 'customers'),
@@ -44,8 +45,7 @@ urlpatterns = [
     path('buildings-report/', buildings_report, name='buildings_report'),
     path('payment_report/', views.payment_report, name='payment_report'),
     path('vat-report/', vat_report, name='vat_report'),
-    #------------------------------------
-    path('', include('django.contrib.auth.urls')),
+
     #---------------------------------------
     path('expenses', views.expenses, name = 'expenses'),
     path('expenses/add/', views.add_expenses, name='add_expenses'),
