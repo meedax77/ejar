@@ -20,10 +20,10 @@ class Customers(models.Model):
     ]
     id = models.BigAutoField(primary_key=True)
     ckind = models.CharField(max_length=50, choices=kind, verbose_name="نوع المستأجر")
-    cID = models.BigIntegerField(verbose_name="رقم الاثبات" , blank=True,)
-    cDob = models.DateField(verbose_name="تاريخ الميلاد", blank=True,)
+    cID = models.BigIntegerField(verbose_name="رقم الاثبات" , blank=True, null=True)
+    cDob = models.DateField(verbose_name="تاريخ الميلاد", blank=True,null=True)
     cName = models.CharField(max_length=50, verbose_name="اسم المستأجر")
-    cNumber = models.BigIntegerField(max_length=10, verbose_name="رقم المستأجر", blank=True,)
+    cNumber = models.BigIntegerField(max_length=10, verbose_name="رقم المستأجر", blank=True,null=True)
     cIdImage = models.ImageField(upload_to='Idphotos/%y/%m/%d', blank=True, verbose_name="صورة الاثبات")
 
     def __str__(self):
