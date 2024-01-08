@@ -171,7 +171,7 @@ def create_payment(request, contract_id):
 #delete functions ------------------------------------
 @login_required(login_url="login")
 def delete_customer(request, customer_id):
-    customer = get_object_or_404(Customers, cID=customer_id)
+    customer = get_object_or_404(Customers, id=customer_id)
     
     # Check if the customer is related to any contracts
     if Contracts.objects.filter(customer=customer).exists():
@@ -240,7 +240,7 @@ def delete_payment_received(request, received_payment_id):
 #edit functions ------------------------------------
 @login_required(login_url="login")
 def edit_customer(request, customer_id):
-    customer = get_object_or_404(Customers, cID=customer_id)
+    customer = get_object_or_404(Customers, id=customer_id)
     
     if request.method == 'POST':
         form = CustomerForm(request.POST, request.FILES, instance=customer)
