@@ -73,14 +73,14 @@ class Units (models.Model):
         ("أخرى ","أخرى "),
     ]
     building = models.ForeignKey(Buildings,on_delete= models.SET_DEFAULT, default= True, verbose_name="المبنى  ")
-    uKind = models.CharField(max_length=50,  choices=kind, verbose_name="سكني ام تجاري")
-    uKind2 = models.CharField(max_length=50, choices=kind2, verbose_name="نوع الوحدة  ")
+    uKind = models.CharField(max_length=50,  choices=kind, verbose_name="سكني ام تجاري",blank=True, null=True)
+    uKind2 = models.CharField(max_length=50, choices=kind2, verbose_name="نوع الوحدة  ",blank=True, null=True)
     uName = models.CharField(primary_key=True, max_length=50,verbose_name=" اسم الوحدة ")
-    uNumber = models.IntegerField( max_length=10, verbose_name="رقم الوحدة - يجب ان يكون رقم خاص للوحدة ")
-    uRoomsNo = models.IntegerField(max_length=10, blank= True, verbose_name=" عدد الغرف ")
-    uFloor = models.IntegerField(max_length=10, blank= True,verbose_name="الدور  ")
-    uElectricity = models.BigIntegerField(max_length=10, blank= True, verbose_name="رقم سداد الكهرباء  ",null=True,)
-    uWater = models.BigIntegerField(max_length=10, blank= True, verbose_name=" رقم سداد المياه ",null=True,)
+    uNumber = models.CharField( max_length=10, verbose_name="رقم الوحدة - يجب ان يكون رقم خاص للوحدة ")
+    uRoomsNo = models.IntegerField(max_length=10,  verbose_name=" عدد الغرف ",blank=True, null=True)
+    uFloor = models.IntegerField(max_length=10,blank=True, null=True, verbose_name="الدور  ")
+    uElectricity = models.BigIntegerField(max_length=10, blank=True, null=True, verbose_name="رقم سداد الكهرباء  ")
+    uWater = models.BigIntegerField(max_length=10,  verbose_name=" رقم سداد المياه ",blank=True, null=True)
     
     def __str__(self):
         return self.uName
