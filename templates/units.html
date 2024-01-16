@@ -48,13 +48,13 @@
           <td style="background-color:rgb(126, 189, 126);" >{{ unit.building }}</th>
           <td style="background-color: rgba(87, 87, 87, 0.349);">
             <a style="text-decoration: none; color: rgb(0, 71, 15);"
-                href="{% url 'edit_unit' unit.uNumber %}">
+                href="{% url 'edit_unit' unit.id %}">
                 <i class="fa-solid fa-pen-to-square"></i>
             </a>
         </td>
         <td style="background-color: rgba(255, 52, 52, 0.349);">
             <a style="text-decoration: none; color: rgb(185, 3, 3);"
-                href="{% url 'delete_unit' unit.uNumber %}">
+                href="{% url 'delete_unit' unit.id %}">
                 <i class="fa-solid fa-trash"></i>
             </a>
         </td>

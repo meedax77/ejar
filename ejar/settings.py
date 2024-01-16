@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'ejar.wsgi.application'
 
 import dj_database_url
 
-DATABASE_URL = "postgresql://postgres:ce-df36db3*B2cfccBf35FeE26fDdBaa@viaduct.proxy.rlwy.net:23275/railway"
+DATABASE_URL = "postgresql://postgres:a6eE*3bceEagbE3B1D24cd1D-a4*c2AE@viaduct.proxy.rlwy.net:44372/railway"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 

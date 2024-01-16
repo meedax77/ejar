@@ -201,7 +201,7 @@ def delete_building(request, building_id):
 #-------------------------------------------
 @login_required(login_url="login")
 def delete_unit(request, unit_id):
-    unit = get_object_or_404(Units, uNumber=unit_id)
+    unit = get_object_or_404(Units, id=unit_id)
     
     if Contracts.objects.filter(unit=unit).exists():
         messages.error(request, "الوحدة مرتبطة بعقد ايجار ولن يتم حذفها حتى يتم حذف العقد")
@@ -270,7 +270,7 @@ def edit_building(request, building_id):
 #--------------------------------------------------------
 @login_required(login_url="login")
 def edit_unit(request, unit_id):
-    unit = get_object_or_404(Units, uNumber=unit_id)
+    unit = get_object_or_404(Units, id=unit_id)
     
     if request.method == 'POST':
         form = UnitForm(request.POST, request.FILES, instance=unit)

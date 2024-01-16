@@ -72,11 +72,12 @@ class Units (models.Model):
         ("فندق ","فندق "),
         ("أخرى ","أخرى "),
     ]
+    id = models.BigAutoField(primary_key=True)
     building = models.ForeignKey(Buildings,on_delete= models.SET_DEFAULT, default= True, verbose_name="المبنى  ")
     uKind = models.CharField(max_length=50,  choices=kind, verbose_name="سكني ام تجاري",blank=True, null=True)
     uKind2 = models.CharField(max_length=50, choices=kind2, verbose_name="نوع الوحدة  ",blank=True, null=True)
-    uName = models.CharField(primary_key=True, max_length=50,verbose_name=" اسم الوحدة ")
-    uNumber = models.BigIntegerField( verbose_name="رقم الوحدة - يجب ان يكون رقم خاص للوحدة ")
+    uName = models.CharField( max_length=50,verbose_name=" اسم الوحدة ")
+    uNumber = models.BigIntegerField( verbose_name="رقم الوحدة - يجب ان يكون رقم خاص للوحدة ",blank=True, null=True)
     uRoomsNo = models.IntegerField(max_length=10,  verbose_name=" عدد الغرف ",blank=True, null=True)
     uFloor = models.IntegerField(max_length=10,blank=True, null=True, verbose_name="الدور  ")
     uElectricity = models.BigIntegerField(max_length=10, blank=True, null=True, verbose_name="رقم سداد الكهرباء  ")
