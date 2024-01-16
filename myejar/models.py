@@ -76,7 +76,7 @@ class Units (models.Model):
     uKind = models.CharField(max_length=50,  choices=kind, verbose_name="سكني ام تجاري",blank=True, null=True)
     uKind2 = models.CharField(max_length=50, choices=kind2, verbose_name="نوع الوحدة  ",blank=True, null=True)
     uName = models.CharField(primary_key=True, max_length=50,verbose_name=" اسم الوحدة ")
-    uNumber = models.CharField( max_length=10, verbose_name="رقم الوحدة - يجب ان يكون رقم خاص للوحدة ")
+    uNumber = models.CharField( verbose_name="رقم الوحدة - يجب ان يكون رقم خاص للوحدة ")
     uRoomsNo = models.IntegerField(max_length=10,  verbose_name=" عدد الغرف ",blank=True, null=True)
     uFloor = models.IntegerField(max_length=10,blank=True, null=True, verbose_name="الدور  ")
     uElectricity = models.BigIntegerField(max_length=10, blank=True, null=True, verbose_name="رقم سداد الكهرباء  ")
