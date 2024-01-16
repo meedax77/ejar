@@ -269,7 +269,7 @@ def edit_building(request, building_id):
 
 #--------------------------------------------------------
 @login_required(login_url="login")
-def edit_unit(request, uNumber):
+def edit_unit(request, unit_id):
     unit = get_object_or_404(Units, uNumber=unit_id)
     
     if request.method == 'POST':
